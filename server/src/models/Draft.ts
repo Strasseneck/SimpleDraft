@@ -1,22 +1,20 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, NonAttribute } from 'sequelize';
+import { Table, Column, Model, HasMany, HasOne } from 'sequelize-typescript';
 import { sequelize } from './index';
 
-interface DraftModel
-    extends Model<
-        InferAttributes<DraftModel>,
-        InferCreationAttributes<DraftModel>
-    > {
-    id: number;
-    title: string;
-    content: string;
-    User?: NonAttribute<UserModel>;
-}
+@Table
+class Draft extends Model {
+    @Column
+    id!: number;
 
-const Draft = sequelize.define<DraftModel>(
-    "Draft",
-    {
-        id: DataTypes.NUMBER,
-        title: DataTypes.STRING,
-        content: DataTypes.TEXT,
-    },
-);
+    @Column
+    title!: string;
+
+    @Column
+    content!: string;
+
+    @HasOne (() => User )
+    author!: User;
+
+    @HasMany (() =>  Change)
+    changes!: Change[];
+}
