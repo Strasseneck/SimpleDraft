@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import Draft from '../db/models/Draft'
 
-export function getHello(req: Request, res: Response, next: NextFunction) {
-    res.json('Hello Draft!')
-  }
-
 export async function getDraft (req: Request, res: Response, next: NextFunction ) {
   const draftId = req.params.id;
   try {
