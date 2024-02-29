@@ -49,5 +49,24 @@ export async function updateDraft (req: Request, res: Response, next: NextFuncti
 }
   
 export async function deleteDraft (req: Request, res: Response, next: NextFunction ) {
-  return
+  const draftId = req.params.id;
+  try {
+    // try to retrieve
+    const draft = await Draft.findOne({ where: { id: draftId }})
+    if (!draft) {
+      // doesn't exist, return error msg
+      res.status(400);
+      res.json('No draft with that id!');
+    } 
+    else {
+      // exists, delete
+      await draft.destroy();
+      res.status(200);
+      res.json(`Draft with id ${draftId} deleted successfully`);
+    }
+  } catch (error) {
+    res.status(400);
+    res.json(`Error deleting draft ${error}`);  
+  }
+
 }
