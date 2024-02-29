@@ -1,7 +1,7 @@
 import { sequelize } from "../index"
 import { DataTypes } from "sequelize"
-import { Change } from "./Change";
-import { User } from "./User";
+import Change  from "./Change";
+import User from "./User";
 
 const Draft = sequelize.define('Draft', {
     title: {
@@ -14,8 +14,11 @@ const Draft = sequelize.define('Draft', {
     }
 });
 
+
+
 Draft.hasMany(Change);
 Change.belongsTo(Draft);
-Draft.belongsTo(User);
 
-export { Draft }
+
+
+export default Draft 

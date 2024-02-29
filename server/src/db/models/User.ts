@@ -1,6 +1,6 @@
 import { sequelize } from "../index"
 import { DataTypes } from "sequelize"
-import { Draft } from "./Draft";
+import Draft  from "./Draft";
 
 const User = sequelize.define('User', {
     name: {
@@ -14,8 +14,9 @@ const User = sequelize.define('User', {
     }
 });
 
-User.hasMany(Draft);
-Draft.belongsTo(User);
+User.hasMany(Draft)
+Draft.belongsTo(User)
 
-export { User }
+
+export default User 
 

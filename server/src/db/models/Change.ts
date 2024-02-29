@@ -16,4 +16,4 @@ const Change = sequelize.define('Change', {
     }
 });
 
-export { Change }
+export default Change 

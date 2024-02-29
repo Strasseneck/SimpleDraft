@@ -1,7 +1,11 @@
 import express from "express";
 import routes from './routes/index'
 import cors from "cors";
-import { sequelize } from "./db";
+import { sequelize } from "./db/index";
+import User from "./db/models/User";
+import Draft from "./db/models/Draft";
+import Change from "./db/models/Change";
+
 import bodyParser from "body-parser";
 
 const app = express();
@@ -14,6 +18,9 @@ app.use(routes);
 
 async function bootstrap () {
     await sequelize.sync({ force : true });
+    await User.sync();
+    await Draft.sync();
+    await Change.sync();
     app.listen(PORT)
     console.log(`Server RUNNING at http://localhost:${PORT}`)
 }
