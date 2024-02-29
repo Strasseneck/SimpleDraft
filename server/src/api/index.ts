@@ -20,6 +20,3 @@ async function bootstrap () {
 
 bootstrap ();
 
-app.listen(PORT, () => {
-    console.log(`server running at http://localhost:${PORT}`)
-});
