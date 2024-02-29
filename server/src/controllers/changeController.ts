@@ -36,5 +36,23 @@ export async function addChange(req: Request, res: Response, next: NextFunction 
 }
   
 export async function deleteChange (req: Request, res: Response, next: NextFunction ) {
-  return
+  const changeId = req.params.id;
+  try {
+    // try to retrieve
+    const change = await Change.findOne({where: {id: changeId }})
+    if (!change) {
+      // doesn't exist, return error msg
+      res.status(400);
+      res.json('No change with that id!');
+    }
+    else {
+      // exists, delete
+      await change.destroy();
+      res.status(200)
+      res.json(`Change with id ${changeId} deleted sucessfully`);
+    }
+  } catch (error) {
+    res.status(400);
+    res.json(`Error deleting change ${error}`)
+  }
 }
