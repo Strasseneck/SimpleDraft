@@ -15,10 +15,9 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
       res.json('No draft with that id!');
     } 
     else {
-      // retrieve associated changes
-
       // exists return draft
       res.status(200);
+      console.log(draft);
       res.json(draft);
     }
   } catch (error) {

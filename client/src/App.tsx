@@ -5,7 +5,7 @@ import { fetchRequest } from './apiService/ApiClient';
 function App() {
   const [state, setState] = useState<string>('');
 
-  useEffect(() => {
+  useEffect (() => {
     async function getState () {
       try {
         const res = await fetchRequest<string>();
