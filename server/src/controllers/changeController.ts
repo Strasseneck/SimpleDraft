@@ -5,7 +5,7 @@ export async function getChange (req: Request, res: Response, next: NextFunction
   const changeId = req.params.id;
   try {
     // try to retrieve
-    const change = await Change.findOne({where: {id: changeId }})
+    const change = await Change.findByPk(changeId)
     if (!change) {
       // doesn't exist, return error msg
       res.status(400);
@@ -39,7 +39,7 @@ export async function deleteChange (req: Request, res: Response, next: NextFunct
   const changeId = req.params.id;
   try {
     // try to retrieve
-    const change = await Change.findOne({where: {id: changeId }})
+    const change = await Change.findByPk(changeId)
     if (!change) {
       // doesn't exist, return error msg
       res.status(400);

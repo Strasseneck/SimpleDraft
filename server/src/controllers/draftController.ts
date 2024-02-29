@@ -5,13 +5,15 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
   const draftId = req.params.id;
   try {
     // try to retrieve
-    const draft = await Draft.findOne({ where: { id: draftId }})
+    const draft = await Draft.findByPk(draftId)
     if (!draft) {
       // doesn't exist, return error msg
       res.status(400);
       res.json('No draft with that id!');
     } 
     else {
+      // retrieve associated changes
+
       // exists return draft
       res.status(200);
       res.json(draft);
@@ -52,7 +54,7 @@ export async function deleteDraft (req: Request, res: Response, next: NextFuncti
   const draftId = req.params.id;
   try {
     // try to retrieve
-    const draft = await Draft.findOne({ where: { id: draftId }})
+    const draft = await Draft.findByPk(draftId)
     if (!draft) {
       // doesn't exist, return error msg
       res.status(400);
