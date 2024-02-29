@@ -5,13 +5,13 @@ const router = express.Router()
 
 // get route
 router.get('/', getHello)
-router.get('/change/:id', getChange)
+router.get('/:id', getChange)
 
 // post route
-router.post('/change', addChange)
+router.post('/', addChange)
 
 // delete route
-router.delete('/change/:id', deleteChange)
+router.delete('/:id', deleteChange)
 
 
 export default router
