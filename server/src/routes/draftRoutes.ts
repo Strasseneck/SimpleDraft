@@ -1,20 +1,18 @@
 import express from 'express'
-import { getHello, getDraft, addDraft, updateDraft, deleteDraft }from '../controllers/draftController'
+import { getDraft, addDraft, updateDraft, deleteDraft }from '../controllers/draftController'
 
 const router = express.Router()
 
 // get route
-router.get('/', getHello)
-router.get('/draft/:id', getDraft)
+router.get('/:id', getDraft)
 
 // post route
-router.post('/draft/:id', addDraft)
+router.post('/', addDraft)
 
 // patch route
-router.patch('draft/:id', updateDraft)
+router.patch('/:id', updateDraft)
 
 // delete route
-router.delete('/draft/:id', deleteDraft)
-
+router.delete('/:id', deleteDraft)
 
 export default router

@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(routes);
 
 async function bootstrap () {
+    // convert this to a function 
     await sequelize.sync({ force : true });
     await User.sync();
     await Draft.sync();

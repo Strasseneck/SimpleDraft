@@ -8,7 +8,7 @@ router.get('/', getHello)
 router.get('/change/:id', getChange)
 
 // post route
-router.post('/change/:id', addChange)
+router.post('/change', addChange)
 
 // delete route
 router.delete('/change/:id', deleteChange)
