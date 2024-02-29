@@ -6,7 +6,21 @@ export function getHello(req: Request, res: Response, next: NextFunction) {
   }
 
 export async function getDraft (req: Request, res: Response, next: NextFunction ) {
-  return
+  const draftId = req.params.id;
+  try {
+    // try to retrieve
+    const draft = await Draft.findOne({ where: { id: draftId }})
+    if (!draft) {
+      res.status(400)
+      res.json('No draft with that id!')
+    } else{
+      res.status(200)
+      res.json(draft);
+    }
+  } catch (error) {
+    res.status(400);
+    res.json('Error saving draft');  
+  }
 }
 
 export async function addDraft (req: Request, res: Response, next: NextFunction ) {
@@ -21,11 +35,11 @@ export async function addDraft (req: Request, res: Response, next: NextFunction 
     else {
       // doesn't exist, create and save
       const newDraft = await Draft.create(req.body);
+      // return the draft
       res.status(201);
       res.json(newDraft);
     }   
   } catch (error) {
-    console.log(`Error saving draft ${error}`);
     res.status(400);
     res.json('Error saving draft');  
   }
