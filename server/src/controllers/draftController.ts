@@ -7,15 +7,18 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
     // try to retrieve
     const draft = await Draft.findOne({ where: { id: draftId }})
     if (!draft) {
-      res.status(400)
-      res.json('No draft with that id!')
-    } else{
-      res.status(200)
+      // doesn't exist, return error msg
+      res.status(400);
+      res.json('No draft with that id!');
+    } 
+    else {
+      // exists return draft
+      res.status(200);
       res.json(draft);
     }
   } catch (error) {
     res.status(400);
-    res.json('Error saving draft');  
+    res.json(`Error retieving draft ${error}`);  
   }
 }
 
@@ -37,9 +40,8 @@ export async function addDraft (req: Request, res: Response, next: NextFunction 
     }   
   } catch (error) {
     res.status(400);
-    res.json('Error saving draft');  
-  }
-  
+    res.json(`Error saving draft ${error}`);  
+  } 
 }
   
 export async function updateDraft (req: Request, res: Response, next: NextFunction ) {
@@ -49,14 +51,3 @@ export async function updateDraft (req: Request, res: Response, next: NextFuncti
 export async function deleteDraft (req: Request, res: Response, next: NextFunction ) {
   return
 }
-  
-  
-export type DraftType = {
-  id: number,
-  title: string,
-  content: string,
-  createdAt: Date,
-  updatedAt: Date,
-  UserId: number,
-}
-

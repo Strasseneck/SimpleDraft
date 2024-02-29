@@ -18,7 +18,7 @@ app.use(routes);
 
 async function bootstrap () {
     // convert this to a function 
-    await sequelize.sync({ force : true });
+    await sequelize.sync({ alter : true });
     await User.sync();
     await Draft.sync();
     await Change.sync();
