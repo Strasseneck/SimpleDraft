@@ -18,6 +18,8 @@ interface DraftAttributes {
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
     public UserId!: number;
+
+    public readonly changes?: Change[]; // for the associated changes return in getDraft queries
   }
   
   Draft.init({
