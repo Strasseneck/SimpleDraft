@@ -4,30 +4,38 @@ import Editor from '../components/Editor';
 import { getDraft } from '../apiService/DraftApi';
 
 interface EditorViewProps {
-  draftid: number,
+  id: number,
 }
 
-const EditorView: React.FC<EditorViewProps> = ({ draftid }) => {
-  const [draft, setDraft] = useState<string>('My Great Project');
-  const [workingDraft, setWorkingDraft] = useState<string>(draft);
+const EditorView: React.FC<EditorViewProps> = ({ id }) => {
+  const [draft, setDraft] = useState<string>('');
+  const [workingDraft, setWorkingDraft] = useState<string>('');
+  const [isReady, setIsReady] = useState<boolean>(false);
 
-  // use effect to get draft
+  // set working draft initially to draft
+  useEffect(() => {
+    setWorkingDraft(draft);
+    console.log(`setting working draft to ${draft}`)
+    setIsReady(true);
+  }, [draft]);
+
+  // use effect to get and set draft
   useEffect(() => {
     async function retrieveDraft () {
       try {
         // get draft from api
-        const draft = await getDraft(draftid);
+        const usersDraft = await getDraft(id);
         // set both states to the content returned
-        setDraft(draft.content)
+        setDraft(usersDraft.content)
       } catch (error) {
-        console.error(`Error retrieving draft with id: ${draftid} ${error}`)
+        console.error(`Error retrieving draft with id: ${id} ${error}`)
       }
     };
 
-    if (draftid) {
+    if (id) {
       retrieveDraft()
     }
-  }, [draftid]);
+  }, [id, draft]);
 
   // update working draft
   const handleWorkingDraftChange = (content: string) => {
@@ -36,8 +44,9 @@ const EditorView: React.FC<EditorViewProps> = ({ draftid }) => {
 
   return (
     <div>
-      <h1>Editor View</h1>
+      {isReady && ( // Render Editor only when isReady is true
       <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />
+    )}
     </div>
   );
 };

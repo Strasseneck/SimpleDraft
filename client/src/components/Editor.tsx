@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import './editor.css';
 
 // types the props, representing the draft to be edited
 interface EditorProps {

@@ -1,0 +1,14 @@
+.main-editor {
+    width: 95vw;
+    height: 90vh;
+    margin: 5vh auto;
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+  }
+  
