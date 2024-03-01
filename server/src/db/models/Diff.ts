@@ -2,12 +2,6 @@ import { sequelize } from "../index"
 import { DataTypes, Model } from "sequelize"
 import { DiffOperation } from "diff-match-patch-typescript";
 
-// const DiffOperationEnum = {
-//     DIFF_DELETE: -1,
-//     DIFF_INSERT: 1,
-//     DIFF_EQUAL: 0,
-//   };
-
   interface DiffAttributes {
     id?: number;
     operation: keyof typeof DiffOperation;

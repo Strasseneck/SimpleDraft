@@ -12,7 +12,7 @@ const DashboardView: FC = () => {
 
   return (
     <div>
-      < DashNavbar />
+      < DashNavbar onDashboardClick={} />
       <p>TODO A grid showing all the current users drafts</p>
       <button onClick={() => openEditor(1)}>Open Editor</button>
     </div>
