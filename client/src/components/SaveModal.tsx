@@ -2,26 +2,22 @@ import React, { useState } from 'react';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 
-const App: React.FC = () => {
-  const [visible, setVisible] = useState(false);
+interface SaveModalProps {
+    visible: boolean;
+    onClose: () => void;
+  }
 
-  const show = () => {
-    setVisible(true);
-  };
-
-  const hide = () => {
-    setVisible(false);
-  };
-
-  return (
-    <div>
-      <button onClick={show}>show</button>
-
-      <Rodal visible={visible} onClose={hide} animation='slideDown'>
-        <div>Content</div>
+  const SaveModal: React.FC<SaveModalProps> = ({ visible, onClose }) => {
+    return (
+      <Rodal visible={visible} onClose={onClose} animation='slideDown'>
+        <div>
+          <h2>Save Change</h2>
+          <p>Enter a short description of the changes you've made to your Draft</p>
+          <textarea placeholder='Describe your change...' />
+          <button onClick={onClose}>Save</button>
+        </div>
       </Rodal>
-    </div>
-  );
-};
+    );
+  };
 
-export default App;
+export default SaveModal;

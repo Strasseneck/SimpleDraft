@@ -23,7 +23,7 @@ const EditorView: React.FC = () => {
   const [draft, setDraft] = useState<string>('');
   const [workingDraft, setWorkingDraft] = useState<string>('');
   const [isReady, setIsReady] = useState<boolean>(false);
-
+  const [visible, setVisible] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -63,10 +63,15 @@ const EditorView: React.FC = () => {
     const oldDraft = draft;
     const newDraft = workingDraft;
     const newDiff = diffMatchPatch.diff_main(oldDraft, newDraft);
-    console.log(newDiff);
+    console.log(newDiff);    
+  };
 
-    // modal popup create the Change Obj to be sent back to server
-    
+  const show = () => {
+    setVisible(true);
+  };
+
+  const hide = () => {
+    setVisible(false);
   };
 
   const handleSaveDraftClick = () => {
@@ -80,14 +85,14 @@ const EditorView: React.FC = () => {
 
   return (
     <div className='EditorView'>
-      <EditorNavbar onDashboardClick={handleDashboardClick}
-        onSaveChangeClick={handleSaveChangeClick}
-        onSaveDraftClick={handleSaveDraftClick}
+      <EditorNavbar 
+        onDashboardClick={handleDashboardClick} 
+        onSaveChangeClick={handleSaveChangeClick} 
+        onSaveDraftClick={handleSaveDraftClick} 
+        onShowModal={show}
       />
-      {isReady && ( // Render Editor only when isReady is true
-        <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />
-      )}
-      <SaveModal />
+      {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
+      <SaveModal visible={visible} onClose={hide} /> 
     </div>
   );
 };
