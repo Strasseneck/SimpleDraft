@@ -1,0 +1,22 @@
+.DashNavbar {
+    display: flex;
+    justify-content: flex-start;
+    background-color: var(--dark);
+    height: 7vh;
+    padding: 5px;
+}
+
+.DashNavbar button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-right: 10px;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.DashNavbar button:hover {
+    background-color: var(--button-hover);
+}

@@ -1,0 +1,16 @@
+.EditorView {
+    height: 100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background-color: var(--dark-bg);
+    ;
+
+  }
+  
+  .Navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }

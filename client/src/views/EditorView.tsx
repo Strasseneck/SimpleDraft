@@ -25,6 +25,7 @@ interface LocationState {
 const EditorView: React.FC = () => {
   const [draft, setDraft] = useState<string>('');
   const [workingDraft, setWorkingDraft] = useState<string>('');
+  const [draftTitle, setDraftTitle] = useState<string>('')
   const [isReady, setIsReady] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ const EditorView: React.FC = () => {
         try {
           // get draft from api
           const usersDraft = await getDraft(id);
+          // get title
+          setDraftTitle(usersDraft.title)
           // set draft state to retrieved draft
           setDraft(usersDraft.content);
           // set working draft initially to draft
@@ -92,7 +95,8 @@ const EditorView: React.FC = () => {
 
   return (
     <div className='EditorView'>
-      <EditorNavbar 
+      <EditorNavbar
+      draftTitle={draftTitle}
         onDashboardClick={handleDashboardClick} 
         onSaveDraftClick={handleSaveDraftClick} 
         onShowModal={show}

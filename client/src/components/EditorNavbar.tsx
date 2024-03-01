@@ -6,9 +6,10 @@ interface Props {
   onDashboardClick: () => void; 
   onSaveDraftClick: () => void;
   onShowModal: () => void;
+  draftTitle: string;
 }
 
-const EditorNavbar: FC<Props> = ({ onDashboardClick, onSaveDraftClick, onShowModal}) => {
+const EditorNavbar: FC<Props> = ({ onDashboardClick, onSaveDraftClick, onShowModal, draftTitle}) => {
   
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const EditorNavbar: FC<Props> = ({ onDashboardClick, onSaveDraftClick, onShowMod
       <button onClick={onChangeHistoryClick}>Changes</button>
       <button onClick={onShowModal}>Save Change</button>
       <button onClick={onSaveDraftClick}>Save Draft</button>
+      <h2>{ draftTitle }</h2>
     </div>
   );
 };
