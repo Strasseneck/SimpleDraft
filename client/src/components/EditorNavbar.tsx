@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './EditorNavbar.css';
 
 interface Props {
@@ -8,11 +9,20 @@ interface Props {
 }
 
 const EditorNavbar: FC<Props> = ({ onDashboardClick, onSaveDraftClick, onShowModal}) => {
+  
+  const navigate = useNavigate();
+
+
+  const onChangeHistoryClick = () => {
+    navigate('/change-history')
+}
+
   return (
     <div className='EditorNavbar'>
+      <button onClick={onDashboardClick}>Dashboard</button>
+      <button onClick={onChangeHistoryClick}>Changes</button>
       <button onClick={onShowModal}>Save Change</button>
       <button onClick={onSaveDraftClick}>Save Draft</button>
-      <button onClick={onDashboardClick}>Dashboard</button>
     </div>
   );
 };
