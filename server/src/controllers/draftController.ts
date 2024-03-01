@@ -1,14 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 import Draft from '../db/models/Draft'
 import Change from '../db/models/Change';
+import Diff from '../db/models/Diff';
 
 export async function getDraft (req: Request, res: Response, next: NextFunction ) {
   const draftId = req.params.id;
   try {
     // try to retrieve
     const draft = await Draft.findByPk(draftId, {
-      include: [Change] // include associated changes
-    })
+      include: [
+        {
+          model: Change, // include Changes associated with Draft
+          include: [Diff] // include associated Diffs within each Change
+        }
+      ]    })
     if (!draft) {
       // doesn't exist, return error msg
       res.status(400);
