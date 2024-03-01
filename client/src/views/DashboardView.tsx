@@ -6,13 +6,6 @@ import EditorView from './EditorView';
 const DashboardView: FC = () => {
   const [draftId, setDraftId] = useState<number | null>(null);
   // const [usersDrafts, setUsersDrafts] = useState<Draft[]>([])
-
-  // const handleOnClick = () => {
-  //   // TODO
-  //   // open modal that creates new draft
-  //   // create draft
-  //   // redirect to editor with new draft id
-  // }
   
   const openEditor = (id: number) => {
     setDraftId(id)
