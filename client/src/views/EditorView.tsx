@@ -1,10 +1,19 @@
-// EditorView.tsx
+// react imports
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+// diff/match/patch imports
+import { DiffMatchPatch }from 'diff-match-patch-typescript';
+// init diff/ match / patch
+const diffMatchPatch = new DiffMatchPatch;
+
+// component imports
 import Editor from '../components/Editor';
 import EditorNavbar from '../components/EditorNavbar';
+// api imports
 import { getDraft } from '../apiService/DraftApi';
+// styling
 import './editorview.css';
-import { useLocation } from 'react-router-dom';
 
 interface LocationState {
   id: number,
@@ -14,41 +23,47 @@ const EditorView: React.FC = () => {
   const [draft, setDraft] = useState<string>('');
   const [workingDraft, setWorkingDraft] = useState<string>('');
   const [isReady, setIsReady] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
   const location = useLocation();
   const { id } = location.state as LocationState;
 
   // set working draft initially to draft
   useEffect(() => {
     setWorkingDraft(draft);
-    console.log(`setting working draft to ${draft}`)
     setIsReady(true);
   }, [draft]);
 
   // use effect to get and set draft
   useEffect(() => {
-    async function retrieveDraft() {
-      try {
-        // get draft from api
-        const usersDraft = await getDraft(id);
-        // set both states to the content returned
-        setDraft(usersDraft.content)
-      } catch (error) {
-        console.error(`Error retrieving draft with id: ${id} ${error}`)
-      }
-    };
-
-    if (id) {
+    if (id !== undefined && id !== null) {
+      async function retrieveDraft() {
+        try {
+          // get draft from api
+          const usersDraft = await getDraft(id);
+          // set draft state to retrieved draft
+          setDraft(usersDraft.content)
+        } catch (error) {
+          console.error(`Error retrieving draft with id: ${id} ${error}`)
+        }
+      };
       retrieveDraft()
     }
   }, [id, draft]);
 
 
   const handleDashboardClick = () => {
-    // Logic to handle Dashboard button click
+    // navigate to dashboard
+    navigate('/');
   };
 
   const handleSaveChangeClick = () => {
-    // Logic to handle Save button click
+    // compute diff
+    const oldDraft = draft;
+    const newDraft = workingDraft;
+    const newDiff = diffMatchPatch.diff_main(oldDraft, newDraft);
+    console.log(newDiff);
   };
 
   const handleSaveDraftClick = () => {
@@ -58,7 +73,6 @@ const EditorView: React.FC = () => {
   // update working draft
   const handleWorkingDraftChange = (content: string) => {
     setWorkingDraft(content);
-    console.log(workingDraft)
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 interface Props {
   onDashboardClick: () => void; 
   onSaveChangeClick: () => void; 
@@ -10,7 +11,7 @@ const EditorNavbar: FC<Props> = ({ onDashboardClick, onSaveChangeClick, onSaveDr
   return (
     <div className='EditorNavbar'>
       <button onClick={onDashboardClick}>Dashboard</button>
-      <button onClick={onSaveChangeClick}>Save</button>
+      <button onClick={onSaveChangeClick}>Save Change</button>
       <button onClick={onSaveDraftClick}>Save Draft</button>
     </div>
   );
