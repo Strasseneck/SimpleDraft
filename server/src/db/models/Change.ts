@@ -5,8 +5,6 @@ import Diff from "./Diff"
 interface ChangeAttributes {
     id: number,
     description: string,
-    diffoperation: string,
-    difftext: string,
     createdAt: Date,
     updatedAt: Date,
     DraftId: number,
@@ -15,8 +13,6 @@ interface ChangeAttributes {
 class Change extends Model<ChangeAttributes> implements ChangeAttributes {
     public id!: number; // using `!` to avoid TypeScript's strict null checking errors
     public description!: string;
-    public diffoperation!: string;
-    public difftext!: string;
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
     public DraftId!: number;
@@ -36,14 +32,6 @@ Change.init({
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    diffoperation: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    difftext: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -61,7 +49,7 @@ Change.init({
     modelName: 'Change',
 });
 
-Change.hasMany(Diff);
+Change.hasMany(Diff, { constraints: true, onDelete: 'CASCADE'});
 Diff.belongsTo(Change);
 
 export default Change 
