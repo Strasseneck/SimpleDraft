@@ -1,27 +1,19 @@
-import { useEffect, useState } from 'react';
-import './App.css'
-import { fetchRequest } from './apiService/ApiClient';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import DashboardView from './views/DashboardView';
+import EditorView from './views/EditorView';
+import ChangeHistoryView from './views/ChangeHistoryView';
 
 function App() {
-  const [state, setState] = useState<string>('');
-
-  useEffect (() => {
-    async function getState () {
-      try {
-        const res = await fetchRequest<string>();
-        setState(res);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getState();
-  })
   return (
-    <>
-    <p> App is working </p>
-    <p>{ state }</p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/editor" element={<EditorView />} />
+        <Route path="/change-history" element={<ChangeHistoryView />} />
+        <Route path="/" element={<DashboardView />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
