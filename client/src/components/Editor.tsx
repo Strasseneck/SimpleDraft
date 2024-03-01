@@ -1,16 +1,18 @@
 import React, { FC } from 'react';
 
-interface Props {
-  // Define props here
+interface EditorProps {
+  workingDraft: string,
+  onWorkingDraftChange: (content: string) => void;
 }
 
-const Editor: FC<Props> = ({ /* Destructure props here */ }) => {
-  // Component logic here
+const Editor: FC<EditorProps> = ({ workingDraft, onWorkingDraftChange }) => {
+  const handleChange = ( event: React.ChangeEvent<HTMLTextAreaElement> ) => {
+    const content = event.target.value;
+    onWorkingDraftChange(content);
+  }
 
   return (
-    <div>
-      {/* JSX content here */}
-    </div>
+    <textarea value={workingDraft} onChange={handleChange} />
   );
 };
 
