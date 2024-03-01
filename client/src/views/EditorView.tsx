@@ -12,6 +12,9 @@ import EditorNavbar from '../components/EditorNavbar';
 import SaveModal from '../components/SaveModal';
 // api imports
 import { getDraft } from '../apiService/DraftApi';
+import { addChange } from '../apiService/ChangeApi';
+// types import
+import Change from '../types/ChangeType';
 // styling
 import './editorview.css';
 
@@ -58,12 +61,19 @@ const EditorView: React.FC = () => {
     navigate('/');
   };
 
-  const handleSaveChangeClick = () => {
+  const handleSaveChange = async (description: string) => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    const newDiff = diffMatchPatch.diff_main(oldDraft, newDraft);
-    console.log(newDiff);    
+    const differences = diffMatchPatch.diff_main(oldDraft, newDraft);
+    console.log(differences);
+    const newChange: Change = {
+      description: description,
+      DraftId: id,
+      Diffs: differences
+    };
+    const savedChange = await addChange(newChange);
+    console.log(savedChange);
   };
 
   const show = () => {
@@ -87,12 +97,11 @@ const EditorView: React.FC = () => {
     <div className='EditorView'>
       <EditorNavbar 
         onDashboardClick={handleDashboardClick} 
-        onSaveChangeClick={handleSaveChangeClick} 
         onSaveDraftClick={handleSaveDraftClick} 
         onShowModal={show}
       />
       {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
-      <SaveModal visible={visible} onClose={hide} /> 
+      <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} /> 
     </div>
   );
 };
