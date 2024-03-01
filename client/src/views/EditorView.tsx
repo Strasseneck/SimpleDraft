@@ -6,10 +6,10 @@ import { useLocation } from 'react-router-dom';
 import { DiffMatchPatch }from 'diff-match-patch-typescript';
 // init diff/ match / patch
 const diffMatchPatch = new DiffMatchPatch;
-
 // component imports
 import Editor from '../components/Editor';
 import EditorNavbar from '../components/EditorNavbar';
+import SaveModal from '../components/SaveModal';
 // api imports
 import { getDraft } from '../apiService/DraftApi';
 // styling
@@ -64,6 +64,9 @@ const EditorView: React.FC = () => {
     const newDraft = workingDraft;
     const newDiff = diffMatchPatch.diff_main(oldDraft, newDraft);
     console.log(newDiff);
+
+    // modal popup create the Change Obj to be sent back to server
+    
   };
 
   const handleSaveDraftClick = () => {
@@ -84,6 +87,7 @@ const EditorView: React.FC = () => {
       {isReady && ( // Render Editor only when isReady is true
         <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />
       )}
+      <SaveModal />
     </div>
   );
 };
