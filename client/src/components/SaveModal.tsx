@@ -5,7 +5,7 @@ import 'rodal/lib/rodal.css';
 interface SaveModalProps {
     visible: boolean;
     onClose: () => void;
-    handleSaveChange: () => void;
+    handleSaveChange: (description: string) => void;
   }
 
   const SaveModal: React.FC<SaveModalProps> = ({ visible, onClose, handleSaveChange}) => {

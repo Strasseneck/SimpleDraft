@@ -32,13 +32,6 @@ const EditorView: React.FC = () => {
   const location = useLocation();
   const { id } = location.state as LocationState;
 
-  // set working draft initially to draft
-  useEffect(() => {
-    setWorkingDraft(draft);
-    setIsReady(true);
-  }, [draft]);
-
-  // use effect to get and set draft
   useEffect(() => {
     if (id !== undefined && id !== null) {
       async function retrieveDraft() {
@@ -46,16 +39,18 @@ const EditorView: React.FC = () => {
           // get draft from api
           const usersDraft = await getDraft(id);
           // set draft state to retrieved draft
-          setDraft(usersDraft.content)
+          setDraft(usersDraft.content);
+          // set working draft initially to draft
+          setWorkingDraft(usersDraft.content);
+          setIsReady(true);
         } catch (error) {
-          console.error(`Error retrieving draft with id: ${id} ${error}`)
+          console.error(`Error retrieving draft with id: ${id}`, error);
         }
-      };
-      retrieveDraft()
+      }
+      retrieveDraft();
     }
-  }, [id, draft]);
-
-
+  }, [id]);
+  
   const handleDashboardClick = () => {
     // navigate to dashboard
     navigate('/');
@@ -65,15 +60,18 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    const differences = diffMatchPatch.diff_main(oldDraft, newDraft);
-    console.log(differences);
+    const diffs = diffMatchPatch.diff_main(oldDraft, newDraft);
+    // create change for db
     const newChange: Change = {
       description: description,
       DraftId: id,
-      Diffs: differences
+      Diffs: diffs
     };
-    const savedChange = await addChange(newChange);
-    console.log(savedChange);
+    await addChange(newChange);
+    // update draft state
+    setDraft(workingDraft);
+    console.log(`workingdraft: ${workingDraft}, draft:${draft}`)
+    hide();
   };
 
   const show = () => {
