@@ -1,3 +1,12 @@
+:root {
+  --paper-color: #f6eee3;
+  --dark-bg: #505050;
+  --dark: #2e3130;
+  --button-color: #3f4444;
+  --button-hover: #262929;
+
+}
+
 html {
     box-sizing: border-box;
     font-size: 16px;
@@ -8,7 +17,6 @@ html {
   }
   
   body, h1, h2, h3, h4, h5, h6, p, ol, ul {
-    background-color: #505050;
     margin: 0;
     padding: 0;
     font-weight: normal;
@@ -21,4 +29,16 @@ html {
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
   }

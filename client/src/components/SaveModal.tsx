@@ -20,12 +20,11 @@ interface SaveModalProps {
   };
 
     return (
-      <Rodal visible={visible} onClose={onClose} animation='slideDown'>
-        <div>
-          <h2>Save Change</h2>
-          <p>Enter a short description of the changes you've made to your Draft</p>
-          <textarea className="change-description" placeholder='Describe your change...' value={description} onChange={handleChange}/>
-          <button onClick={handleClick}>Save</button>
+      <Rodal className='save-modal' visible={visible} onClose={onClose} animation='slideDown' customStyles={{"background-color": "var(--paper-color)", "font-family": "Noto Sans Mono"}}>
+        <div id='save-modal'>
+          <h3 style={{marginBottom: "8px"}}>Save Change</h3>
+          <textarea autoFocus style={{ height: "120px", backgroundColor: "var(--paper-color)", width: "100%", outline: "0", fontSize: "16px", padding: "8px", border: "hidden"}} id="change-description" placeholder='Provide a short description of the changes made.' value={description} onChange={handleChange}/>
+          <button style={{height: "45px", width: "90px", borderRadius: "5px", cursor: "pointer", marginTop: "15px"}} onClick={handleClick}>Save</button>
         </div>
       </Rodal>
     );
