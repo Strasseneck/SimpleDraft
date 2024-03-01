@@ -1,11 +1,12 @@
+import { Diff } from "diff-match-patch-typescript"
+
 export interface Change {
     id: number,
     description: string,
-    diffoperation: string,
-    difftext: string,
     createdAt: Date,
     updatedAt: Date,
     DraftId: number,
+    Diffs: Diff[]
 }
 
 export interface Draft {
