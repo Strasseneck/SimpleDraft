@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import './editor.css';
+import './Editor.css';
 
 // types the props, representing the draft to be edited
 interface EditorProps {
@@ -14,8 +14,16 @@ const Editor: FC<EditorProps> = ({ workingDraft, onWorkingDraftChange }) => {
     onWorkingDraftChange(content);
   }
 
+  const calculateHeight = () => {
+    const rows = workingDraft.split('\n').length; 
+    const lineHeight = 20; 
+    const minHeight = 100;
+    const height = Math.max(minHeight, rows * lineHeight); 
+    return `${height}px`;
+};
+
   return (
-    <textarea className='main-editor' value={workingDraft} onChange={handleChange} />
+    <textarea autoFocus className='main-editor' value={workingDraft} onChange={handleChange} style={{ height: calculateHeight()}}/>
   );
 };
 

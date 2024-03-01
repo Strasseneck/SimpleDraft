@@ -17,4 +17,3 @@ const DashboardView: FC = () => {
 };
 
 export default DashboardView;
-

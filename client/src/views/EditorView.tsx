@@ -16,7 +16,7 @@ import { addChange } from '../apiService/ChangeApi';
 // types import
 import Change from '../types/ChangeType';
 // styling
-import './editorview.css';
+import './Editorview.css';
 
 interface LocationState {
   id: number,
@@ -50,7 +50,7 @@ const EditorView: React.FC = () => {
       retrieveDraft();
     }
   }, [id]);
-  
+
   const handleDashboardClick = () => {
     // navigate to dashboard
     navigate('/');
@@ -70,7 +70,6 @@ const EditorView: React.FC = () => {
     await addChange(newChange);
     // update draft state
     setDraft(workingDraft);
-    console.log(`workingdraft: ${workingDraft}, draft:${draft}`)
     hide();
   };
 
