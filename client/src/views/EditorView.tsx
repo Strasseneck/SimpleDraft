@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Editor from '../components/Editor';
 import { getDraft } from '../apiService/DraftApi';
+import './editorview.css';
 
 interface EditorViewProps {
   id: number,
@@ -43,7 +44,7 @@ const EditorView: React.FC<EditorViewProps> = ({ id }) => {
   };
 
   return (
-    <div>
+    <div className='EditorView'>
       {isReady && ( // Render Editor only when isReady is true
       <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />
     )}
