@@ -1,5 +1,6 @@
 import { sequelize } from "../index"
 import { DataTypes, Model } from "sequelize"
+import Diff from "./Diff"
 
 interface ChangeAttributes {
     id: number,
@@ -19,6 +20,9 @@ class Change extends Model<ChangeAttributes> implements ChangeAttributes {
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
     public DraftId!: number;
+
+    public readonly diffs?: Diff[]; // for diffs that make up the change
+
 }
 
 Change.init({
@@ -52,9 +56,12 @@ Change.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
- }, {
-        sequelize,
-        modelName: 'Change',
-    });
+}, {
+    sequelize,
+    modelName: 'Change',
+});
+
+Change.hasMany(Diff);
+Diff.belongsTo(Change);
 
 export default Change 
