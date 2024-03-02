@@ -1,17 +1,9 @@
 .SingleChangeView {
-    width: 70vw;
-    min-height: 100vh;
-    margin: 5vh auto;
-    padding: 125px;
-    font-size: 16px;
-    line-height: 1.6;
-    border: 1px solid #ccc;
-    background-color: var(--paper-color);
-    box-sizing: border-box;
-    outline: none;
-    resize: none;
-    border-radius: 3px;
-    overflow-y: scroll;
+    height: 100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background-color: var(--dark-bg);
 }
 
 .SingleChangeNavbar {
@@ -22,8 +14,8 @@
 }
 
 .MainPageView {
-    width: 100vw;
+    /* width: 100vw;
     height: 100vh;
-    background-color: var(--dark-bg);
-    margin-top: 80px;
+    background-color: var(--dark-bg); */
+    margin-top: 50px;
 }

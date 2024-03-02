@@ -8,6 +8,7 @@ import DOMPurify from 'dompurify';
 
 
 import SingleChangeNavbar from '../components/SingleChangeNavbar';
+import SingleChangePage from '../components/SingleChangePage';
 import './SingleChangeView.css'
 
 interface LocationState {
@@ -33,11 +34,16 @@ const SingleChangeView: React.FC = () => {
     const handleEditorClick = (draftId: number) => {
         const id = draftId;
         navigate('/editor', { state: { id } });
-    }; 
-    
+    };
+
+    const handleDraftHistoryClick = (draftId: number) => {
+        const id = draftId;
+        navigate('/change-history', { state: { id } });
+    }
+
     const handleRevertClick = () => {
         // revert to that version
-    };  
+    };
 
     useEffect(() => {
         if (id !== undefined && id !== null) {
@@ -69,13 +75,13 @@ const SingleChangeView: React.FC = () => {
     const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
 
 
-    const calculateHeight = () => {
-        const rows = displayDiffs.split('\n').length;
-        const lineHeight = 20;
-        const minHeight = 100;
-        const height = Math.max(minHeight, rows * lineHeight);
-        return `${height}px`;
-    };
+    // const calculateHeight = () => {
+    //     const rows = displayDiffs.split('\n').length;
+    //     const lineHeight = 20;
+    //     const minHeight = 100;
+    //     const height = Math.max(minHeight, rows * lineHeight);
+    //     return `${height}px`;
+    // };
 
     return (
         <div className='MainPageView'>
@@ -86,9 +92,13 @@ const SingleChangeView: React.FC = () => {
                         draftTitle={draftTitle}
                         onDashboardClick={handleDashboardClick}
                         onEditorClick={() => handleEditorClick(1)}
+                        onDraftHistoryClick={() => handleDraftHistoryClick(1)}
                         onRevertClick={handleRevertClick}
                     />
-                    <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: sanitizedHtmlDiffs }} style={{ height: calculateHeight() }} />
+                    <div className='SingleChangeView'>
+                        < SingleChangePage sanitizedHtmlDiffs={sanitizedHtmlDiffs} />
+                    </div>
+                    {/* <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: sanitizedHtmlDiffs }} style={{ height: calculateHeight() }} /> */}
                 </div>
             )}
         </div>
