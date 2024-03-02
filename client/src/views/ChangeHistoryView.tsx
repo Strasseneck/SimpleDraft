@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChangeResponse } from '../apiService/responseTypes';
 import { getDraft } from '../apiService/DraftApi';
 import ChangeHistoryNavbar from '../components/ChangeHistoryNavbar';
+import ChangeListItem from '../components/ChangeListItem';
 import './ChangeHistoryView.css';
 
 interface LocationState {
@@ -12,12 +13,8 @@ interface LocationState {
 
 const ChangeHistoryView: FC = () => {
   const [draftTitle, setDraftTitle] = useState<string>('');
-  const [draftContent, setDraftContent] = useState<string>('');
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
   const navigate = useNavigate();
-
-
-
   const location = useLocation();
   const { id } = location.state as LocationState;
 
@@ -28,9 +25,8 @@ const ChangeHistoryView: FC = () => {
           // get draft from api
           const usersDraft = await getDraft(id);
           // deconstruct the draft into states
-          const { title, content, Changes } = usersDraft;
+          const { title, Changes } = usersDraft;
           setDraftTitle(title);
-          setDraftContent(content);
           setDraftChanges(Changes);
         } catch (error) {
           console.error(`Error retrieving draft with id: ${id}`, error);
@@ -58,10 +54,12 @@ const ChangeHistoryView: FC = () => {
         onDashboardClick={handleDashboardClick}
         onEditorClick={() => handleEditorClick(1)}
       />
-      <p>Change History Working</p>
-      <p>Draft Title: {draftTitle}</p>
-      <p>Draft Content: {draftContent}</p>
-      <p>Draft Changes: {JSON.stringify(draftChanges)}</p>
+      <div className='ChangeList'>
+        <h1>History for {draftTitle}</h1>
+        {draftChanges.map((change, index) => (
+          <ChangeListItem key={index} change={change} />
+        ))}
+      </div>
     </div>
   );
 };

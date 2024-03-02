@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './ChangeHistoryNavbar.css';
 
 interface Props {
@@ -10,9 +9,6 @@ interface Props {
 
 const ChangeHistoryNavbar: FC<Props> = ({onDashboardClick, onEditorClick }) => {
   
-  const navigate = useNavigate();
-
-
   return (
     <div className='ChangeHistoryNavbar'>
     <button onClick={onDashboardClick}>Dashboard</button>

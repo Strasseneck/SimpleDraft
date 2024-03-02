@@ -1,0 +1,6 @@
+.ChangeItem {
+    background-color: var(--paper-color);
+    margin-top: 50px;
+    border-radius: 5px;
+    padding: 20px;
+}
