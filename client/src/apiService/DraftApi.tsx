@@ -1,6 +1,10 @@
 import { apiClient } from './ApiClient';
 import { DraftResponse } from './responseTypes';
 
+export const getAllDrafts = async () => {
+  return await apiClient<DraftResponse[]>(`draft/all`);
+};
+
 export const getDraft = async (id: number) => {
   return await apiClient<DraftResponse>(`draft/${id}`);
 };
