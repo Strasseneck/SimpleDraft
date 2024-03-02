@@ -25,6 +25,6 @@ const ChangeListItem: React.FC<ChangeListItemProps> = ({ change }) => {
             <p>Created At: {formattedDate}</p>
         </div>
     );
-}
+};
 
 export default ChangeListItem;
