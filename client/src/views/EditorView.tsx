@@ -13,6 +13,7 @@ import SaveModal from '../components/SaveModal';
 // api imports
 import { getDraft } from '../apiService/DraftApi';
 import { addChange } from '../apiService/ChangeApi';
+import { updateDraft } from '../apiService/DraftApi';
 // types import
 import Change from '../types/ChangeType';
 // styling
@@ -76,6 +77,7 @@ const EditorView: React.FC = () => {
       Diffs: diffs
     };
     await addChange(newChange);
+    await updateDraft(id, { content: workingDraft })
     // update draft state
     setDraft(workingDraft);
     hide();
@@ -107,8 +109,10 @@ const EditorView: React.FC = () => {
         onSaveDraftClick={handleSaveDraftClick}
         onShowModal={show}
       />
-      {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
-      <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} />
+      <div className='MainEditorView'>
+        {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
+        <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} />
+      </div>
     </div>
   );
 };

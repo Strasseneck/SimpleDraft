@@ -31,7 +31,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
     const newChange = await Change.create(req.body);
 
     // Create the diffs and associate them with the new change
-    const createdDiffs = await Promise.all(
+    await Promise.all(
       diffs.map(async (diff: any) => {
         // return await Diff.create({ ...diffData, ChangeId: newChange.id });
         return await Diff.create({ operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL", text: diff[1], ChangeId: newChange.id });
