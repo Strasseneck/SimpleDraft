@@ -7,7 +7,9 @@ export async function getChange (req: Request, res: Response, next: NextFunction
   const changeId = req.params.id;
   try {
     // try to retrieve
-    const change = await Change.findByPk(changeId)
+    const change = await Change.findByPk(changeId, {
+      include: [Diff]
+    })
     if (!change) {
       // doesn't exist, return error msg
       res.status(400);
