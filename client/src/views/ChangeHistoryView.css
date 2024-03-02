@@ -1,7 +1,6 @@
 .ChangeHistoryView {
   height: 100vh;
   display: flex;
-  justify-content: center;
   background-color: var(--dark-bg);
 }
 
@@ -13,6 +12,15 @@
 }
 
 .ChangeList {
+  display: flex;
+  flex-direction: column;
   width: 80vw;
+  align-items: center;
   background-color: var(--dark-bg);
+}
+
+.MainView {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
 }

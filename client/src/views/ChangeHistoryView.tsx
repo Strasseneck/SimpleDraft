@@ -47,6 +47,18 @@ const ChangeHistoryView: FC = () => {
     navigate('/editor', { state: { id } });
   }
 
+  // sort changes by date
+  const sortedChanges = draftChanges.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  // group changes by day
+  const groupedChanges = sortedChanges.reduce<{ [key: string]: ChangeResponse[] }>((accumulator, change) => {
+    const date = new Date(change.createdAt).toLocaleDateString();
+    accumulator[date] = accumulator[date] || [];
+    accumulator[date].push(change);
+    return accumulator;
+  }, {});
+
+
   return (
     <div className='ChangeHistoryView'>
       <ChangeHistoryNavbar
@@ -54,11 +66,18 @@ const ChangeHistoryView: FC = () => {
         onDashboardClick={handleDashboardClick}
         onEditorClick={() => handleEditorClick(1)}
       />
-      <div className='ChangeList'>
-        <h1>History for {draftTitle}</h1>
-        {draftChanges.map((change, index) => (
-          <ChangeListItem key={index} change={change} />
-        ))}
+      <div className='MainView'>
+        <div className='ChangeList'>
+        <h1 className='HistoryHeader'>History for {draftTitle}</h1>
+          {Object.entries(groupedChanges).map(([date, changesForDay]) => (
+            <div className='SingleDay' key={date}>
+              <h2>{date}</h2>
+              {changesForDay.map((change, index) => (
+                <ChangeListItem key={index} change={change} />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
