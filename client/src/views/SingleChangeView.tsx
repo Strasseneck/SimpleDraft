@@ -4,6 +4,9 @@ import { getChange } from '../apiService/ChangeApi';
 import { ChangeResponse } from '../apiService/responseTypes';
 import { DiffMatchPatch, Diff, DiffOperation } from 'diff-match-patch-typescript';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+
+
 import SingleChangeNavbar from '../components/SingleChangeNavbar';
 import './SingleChangeView.css'
 
@@ -30,7 +33,11 @@ const SingleChangeView: React.FC = () => {
     const handleEditorClick = (draftId: number) => {
         const id = draftId;
         navigate('/editor', { state: { id } });
-      }    
+    }; 
+    
+    const handleRevertClick = () => {
+        // revert to that version
+    };  
 
     useEffect(() => {
         if (id !== undefined && id !== null) {
@@ -56,27 +63,33 @@ const SingleChangeView: React.FC = () => {
         return [DiffOperation[operation], text];
     }
 
-    const onRevertClick = () => {
-        // revert to that version
-    }
-
     // Map over the array and extract Diff tuples
     const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
     const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
+    const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
+
+
+    const calculateHeight = () => {
+        const rows = displayDiffs.split('\n').length;
+        const lineHeight = 20;
+        const minHeight = 100;
+        const height = Math.max(minHeight, rows * lineHeight);
+        return `${height}px`;
+    };
 
     return (
         <div className='MainPageView'>
             {isReady && change && (
-                <>
+                <div>
                     <SingleChangeNavbar
                         changeDescription={change.description}
                         draftTitle={draftTitle}
                         onDashboardClick={handleDashboardClick}
                         onEditorClick={() => handleEditorClick(1)}
-                        onRevertClick={onRevertClick}
+                        onRevertClick={handleRevertClick}
                     />
-                    <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: displayDiffs }} />
-                </>
+                    <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: sanitizedHtmlDiffs }} style={{ height: calculateHeight() }} />
+                </div>
             )}
         </div>
     );

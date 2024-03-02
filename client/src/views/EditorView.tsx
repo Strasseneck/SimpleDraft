@@ -91,10 +91,6 @@ const EditorView: React.FC = () => {
     setVisible(false);
   };
 
-  const handleSaveDraftClick = () => {
-    // Logic to handle Save Draft button click
-  };
-
   // update working draft
   const handleWorkingDraftChange = (content: string) => {
     setWorkingDraft(content);
@@ -106,7 +102,6 @@ const EditorView: React.FC = () => {
         draftTitle={draftTitle}
         onDashboardClick={handleDashboardClick}
         onChangeHistoryClick={() => handleChangeHistoryClick(1)}
-        onSaveDraftClick={handleSaveDraftClick}
         onShowModal={show}
       />
       <div className='MainEditorView'>
