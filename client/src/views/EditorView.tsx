@@ -54,10 +54,15 @@ const EditorView: React.FC = () => {
     }
   }, [id]);
 
+  // navigation
   const handleDashboardClick = () => {
     // navigate to dashboard
     navigate('/');
   };
+
+  const handleChangeHistoryClick = ( id: number ) => {
+    navigate('/change-history', { state: { id } });
+}
 
   const handleSaveChange = async (description: string) => {
     // compute diff
@@ -97,7 +102,8 @@ const EditorView: React.FC = () => {
     <div className='EditorView'>
       <EditorNavbar
       draftTitle={draftTitle}
-        onDashboardClick={handleDashboardClick} 
+        onDashboardClick={handleDashboardClick}
+        onChangeHistoryClick={() => handleChangeHistoryClick(1)}
         onSaveDraftClick={handleSaveDraftClick} 
         onShowModal={show}
       />

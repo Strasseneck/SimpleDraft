@@ -1,10 +1,20 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { useLocation } from 'react-router-dom';
+
+interface LocationState {
+  id: number,
+}
 
 const ChangeHistoryView: FC = () => {
+
+  const location = useLocation();
+  const { id } = location.state as LocationState;
+
   return (
     <div>
       <p>Change History Working</p>
-      {/* JSX content for the view here */}
+      <p>{ id }</p>
+          
     </div>
   );
 };
