@@ -3,6 +3,18 @@ import Draft from '../db/models/Draft'
 import Change from '../db/models/Change';
 import Diff from '../db/models/Diff';
 
+export async function getAllDrafts (req: Request, res: Response, next: NextFunction ) {
+  try {
+    const drafts = await Draft.findAll({include: [{ model: Change, include: [Diff]}]})
+    res.status(200);
+    res.json(drafts);
+
+  } catch (error) {
+    res.status(400);
+    res.json(`Eroor retrieving all drafts ${error}`)
+  }
+}
+
 export async function getDraft (req: Request, res: Response, next: NextFunction ) {
   const draftId = req.params.id;
   try {
@@ -22,7 +34,6 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
     else {
       // exists return draft
       res.status(200);
-      console.log(draft);
       res.json(draft);
     }
   } catch (error) {

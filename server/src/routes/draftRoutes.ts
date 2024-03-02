@@ -1,9 +1,10 @@
 import express from 'express'
-import { getDraft, addDraft, updateDraft, deleteDraft }from '../controllers/draftController'
+import { getAllDrafts, getDraft, addDraft, updateDraft, deleteDraft }from '../controllers/draftController'
 
 const router = express.Router()
 
-// get route
+// get routes
+router.get('/all', getAllDrafts)
 router.get('/:id', getDraft)
 
 // post route
