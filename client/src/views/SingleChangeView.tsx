@@ -28,7 +28,8 @@ const SingleChangeView: React.FC = () => {
     };
 
     const handleEditorClick = (draftId: number) => {
-        navigate('/editor', { state: { draftId } });
+        const id = draftId;
+        navigate('/editor', { state: { id } });
       }    
 
     useEffect(() => {
