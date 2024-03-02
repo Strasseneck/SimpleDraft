@@ -18,3 +18,9 @@ export interface DraftResponse {
     updatedAt: Date,
     Changes: ChangeResponse[],
 }
+
+// Destructuring the DraftResponse object into separate states
+export const separateDraftStates = (draftResponse: DraftResponse) => {
+    const { id, title, content, UserId, createdAt, updatedAt, Changes } = draftResponse;
+    return { id, title, content, UserId, createdAt, updatedAt, Changes };
+};
