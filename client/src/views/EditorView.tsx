@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 // diff/match/patch imports
-import { DiffMatchPatch }from 'diff-match-patch-typescript';
+import { DiffMatchPatch } from 'diff-match-patch-typescript';
 // init diff/ match / patch
 const diffMatchPatch = new DiffMatchPatch;
 // component imports
@@ -60,9 +60,9 @@ const EditorView: React.FC = () => {
     navigate('/');
   };
 
-  const handleChangeHistoryClick = ( id: number ) => {
+  const handleChangeHistoryClick = (id: number) => {
     navigate('/change-history', { state: { id } });
-}
+  }
 
   const handleSaveChange = async (description: string) => {
     // compute diff
@@ -101,14 +101,14 @@ const EditorView: React.FC = () => {
   return (
     <div className='EditorView'>
       <EditorNavbar
-      draftTitle={draftTitle}
+        draftTitle={draftTitle}
         onDashboardClick={handleDashboardClick}
         onChangeHistoryClick={() => handleChangeHistoryClick(1)}
-        onSaveDraftClick={handleSaveDraftClick} 
+        onSaveDraftClick={handleSaveDraftClick}
         onShowModal={show}
       />
       {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
-      <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} /> 
+      <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} />
     </div>
   );
 };
