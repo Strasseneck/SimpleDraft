@@ -33,8 +33,8 @@ const DashboardView: FC = () => {
   return (
     <div>
       < DashNavbar />
-      {isReady && <AllDraftsGrid />}
-      <button onClick={() => openEditor(1)}>Open Editor</button>
+      {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} />}     
+       <button onClick={() => openEditor(1)}>Open Editor</button>
     </div>
   );
 };

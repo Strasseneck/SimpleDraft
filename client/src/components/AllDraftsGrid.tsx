@@ -1,16 +1,19 @@
 import { FC } from 'react';
+import { DraftResponse } from '../apiService/responseTypes';
+import DraftCard from './DraftCard';
 
 interface Props {
-  // Define props interface here
+    drafts: DraftResponse[];
 }
 
-const AllDraftsGrid: FC<Props> = ({ /* destructure props here */ }) => {
-  // Component logic and JSX here
+const AllDraftsGrid: FC<Props> = ({ drafts }) => {
 
   return (
     <div className='AllDraftsGrid'>
-      {/* JSX content here */}
-    </div>
+    {drafts.map((draft) => (
+        <DraftCard key={draft.id} draft={draft} />
+    ))}
+</div>
   );
 };
 

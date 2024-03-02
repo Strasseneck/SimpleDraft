@@ -1,15 +1,16 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { DraftResponse } from '../apiService/responseTypes';
 
 interface Props {
-  // Define props here
+  draft: DraftResponse;
 }
 
-const DraftCard: FC<Props> = ({ /* Destructure props here */ }) => {
+const DraftCard: FC<Props> = ({ draft }) => {
   // Component logic here
 
   return (
     <div>
-      {/* JSX content here */}
+      {draft.title}
     </div>
   );
 };
