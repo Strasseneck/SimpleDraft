@@ -6,15 +6,17 @@ import './ChangeListItem.css';
 
 interface ChangeListItemProps {
     change: ChangeResponse;
+    draftTitle: string;
+    draftId: number;
 }
 
-const ChangeListItem: React.FC<ChangeListItemProps> = ({ change }) => {
+const ChangeListItem: React.FC<ChangeListItemProps> = ({ change, draftTitle, draftId}) => {
     const { description, createdAt, id } = change;
     const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
     const navigate = useNavigate();
 
     const handleDescriptionClick = () => {
-        navigate('/change', { state: { id } });
+        navigate('/change', { state: { id, draftTitle, draftId } });
     };
 
     return (

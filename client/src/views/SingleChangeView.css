@@ -1,11 +1,28 @@
-.DIFF_EQUAL {
-    color: black;
+.SingleChangeView {
+    width: 70vw;
+    min-height: 100vh;
+    margin: 5vh auto;
+    padding: 125px;
+    font-size: 16px;
+    line-height: 1.6;
+    border: 1px solid #ccc;
+    background-color: var(--paper-color);
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+    border-radius: 3px;
+    overflow-y: scroll;
 }
 
-.DIFF_INSERT {
-    color: green;
+.SingleChangeNavbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
-.DIFF_DELETE {
-    color: red;
+.MainPageView {
+    width: 100vw;
+    background-color: var(--dark-bg);
+    margin-top: 50px;
 }

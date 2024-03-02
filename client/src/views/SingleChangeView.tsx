@@ -3,20 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
 import { ChangeResponse } from '../apiService/responseTypes';
 import { DiffMatchPatch, Diff, DiffOperation } from 'diff-match-patch-typescript';
+import { useNavigate } from 'react-router-dom';
+import SingleChangeNavbar from '../components/SingleChangeNavbar';
 import './SingleChangeView.css'
-
-
-interface DiffAttributes {
-    id?: number;
-    operation: keyof typeof DiffOperation;
-    text: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    ChangeId: number;
-}
 
 interface LocationState {
     id: number,
+    draftTitle: string;
+    draftId: number;
 }
 
 const SingleChangeView: React.FC = () => {
@@ -24,8 +18,18 @@ const SingleChangeView: React.FC = () => {
     const [diffs, setDiffs] = useState<Diff[]>([]);
     const [isReady, setIsReady] = useState<boolean>(false);
     const location = useLocation();
-    const { id } = location.state as LocationState;
+    const { id, draftTitle, draftId } = location.state as LocationState;
     const dmp = new DiffMatchPatch;
+    const navigate = useNavigate();
+
+    const handleDashboardClick = () => {
+        // navigate to dashboard
+        navigate('/');
+    };
+
+    const handleEditorClick = (draftId: number) => {
+        navigate('/editor', { state: { draftId } });
+      }    
 
     useEffect(() => {
         if (id !== undefined && id !== null) {
@@ -51,15 +55,30 @@ const SingleChangeView: React.FC = () => {
         return [DiffOperation[operation], text];
     }
 
+    const onRevertClick = () => {
+        // revert to that version
+    }
+
     // Map over the array and extract Diff tuples
     const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
     const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
-    console.log(displayDiffs)
 
     return (
-        /// this bad but I can't for the lift of me work out a safer way to do it!
-        <div dangerouslySetInnerHTML={{ __html: displayDiffs }} />
-    )
+        <div className='MainPageView'>
+            {isReady && change && (
+                <>
+                    <SingleChangeNavbar
+                        changeDescription={change.description}
+                        draftTitle={draftTitle}
+                        onDashboardClick={handleDashboardClick}
+                        onEditorClick={() => handleEditorClick(1)}
+                        onRevertClick={onRevertClick}
+                    />
+                    <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: displayDiffs }} />
+                </>
+            )}
+        </div>
+    );
 }
 
 export default SingleChangeView;
