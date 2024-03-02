@@ -1,13 +1,13 @@
 import { apiClient } from './ApiClient';
-import { Change } from './responseTypes';
+import { ChangeResponse } from './responseTypes';
 import ChangeType from '../types/ChangeType';
 
 export const getChange = async (id: number) => {
-  return await apiClient<Change>(`change/${id}`);
+  return await apiClient<ChangeResponse>(`change/${id}`);
 };
 
 export const addChange = async (changeData: ChangeType) => {
-  return await apiClient<Change>('change', 'POST', changeData);
+  return await apiClient<ChangeResponse>('change', 'POST', changeData);
 };
 
 export const deleteChange = async (id: number) => {

@@ -1,6 +1,6 @@
 import { Diff } from "diff-match-patch-typescript"
 
-export interface Change {
+export interface ChangeResponse {
     id: number,
     description: string,
     createdAt: Date,
@@ -9,12 +9,12 @@ export interface Change {
     Diffs: Diff[]
 }
 
-export interface Draft {
+export interface DraftResponse {
     id: number,
     title: string,
     content: string,
     UserId: number,
     createdAt: Date,
     updatedAt: Date,
-    Changes: Change[],
+    Changes: ChangeResponse[],
 }
