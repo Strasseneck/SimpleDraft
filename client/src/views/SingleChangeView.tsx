@@ -2,8 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
 import { ChangeResponse } from '../apiService/responseTypes';
-import { Diff } from 'diff-match-patch-typescript';
+import { DiffMatchPatch, Diff, DiffOperation } from 'diff-match-patch-typescript';
+import './SingleChangeView.css'
 
+
+interface DiffAttributes {
+    id?: number;
+    operation: keyof typeof DiffOperation;
+    text: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    ChangeId: number;
+}
 
 interface LocationState {
     id: number,
@@ -15,6 +25,7 @@ const SingleChangeView: React.FC = () => {
     const [isReady, setIsReady] = useState<boolean>(false);
     const location = useLocation();
     const { id } = location.state as LocationState;
+    const dmp = new DiffMatchPatch;
 
     useEffect(() => {
         if (id !== undefined && id !== null) {
@@ -24,11 +35,6 @@ const SingleChangeView: React.FC = () => {
                     const currentChange = await getChange(id);
                     const { Diffs } = currentChange;
                     setDiffs(Diffs)
-                    // diffs.forEach(diff => {
-                    //     const [operation, text] = diff
-                    //     console.log(operation); 
-                    //     console.log(text);      
-                    // });
                     setChange(currentChange);
                     setIsReady(true);
                 } catch (error) {
@@ -39,18 +45,20 @@ const SingleChangeView: React.FC = () => {
         }
     }, [id]);
 
+    // Function to destructure objects into Diff tuples
+    function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
+        const { operation, text } = diffObject;
+        return [DiffOperation[operation], text];
+    }
+
+    // Map over the array and extract Diff tuples
+    const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
+    const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
+    console.log(displayDiffs)
+
     return (
-        <div className='SingleChangeView'>
-            {isReady && change !== undefined && <div>
-                {diffs.map((diff: Diff,  index: number) => (
-                    <p key={index}>
-                        { diff.operation }
-                        { diff.text }
-                    </p>
-                ))}
-                <p>{change.description}</p>
-            </div>}
-        </div>
+        /// this bad but I can't for the lift of me work out a safer way to do it!
+        <div dangerouslySetInnerHTML={{ __html: displayDiffs }} />
     )
 }
 

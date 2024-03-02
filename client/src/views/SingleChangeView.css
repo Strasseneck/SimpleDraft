@@ -1,0 +1,11 @@
+.DIFF_EQUAL {
+    color: black;
+}
+
+.DIFF_INSERT {
+    color: green;
+}
+
+.DIFF_DELETE {
+    color: red;
+}
