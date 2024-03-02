@@ -1,11 +1,7 @@
 import express from "express";
 import routes from './routes/index'
 import cors from "cors";
-import { sequelize } from "./db/index";
 import { syncDb } from "./db/sync";
-import User from "./db/models/User";
-import Draft from "./db/models/Draft";
-import Change from "./db/models/Change";
 
 import bodyParser from "body-parser";
 
