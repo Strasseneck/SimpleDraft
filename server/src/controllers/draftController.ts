@@ -38,7 +38,7 @@ export async function addDraft (req: Request, res: Response, next: NextFunction 
     if (existingDraft) {
       // exists
       res.status(400);
-      res.json('A draft with that title already exists');
+      res.json(`A draft with title ${req.body.title} already exists`);
     }
     else {
       // doesn't exist, create and save
@@ -54,7 +54,25 @@ export async function addDraft (req: Request, res: Response, next: NextFunction 
 }
   
 export async function updateDraft (req: Request, res: Response, next: NextFunction ) {
-  return
+  try {
+    // check a draft with id exists
+    const existingDraft = await Draft.findByPk(req.params.id);
+    if (!existingDraft) {
+      // doesn't exist
+      res.status(400);
+      res.json(`No draft with id ${req.params.id} found`);
+    } 
+    else {
+      // exists update and return
+      const updatedDraft = await existingDraft.update({ content: req.body.content})
+      await updatedDraft.save();
+      res.json(updatedDraft);
+    }
+    
+  } catch (error) {
+    res.status(400);
+    res.json(`Error updating draft with id ${req.params.id} ${error}`)
+  }
 }
   
 export async function deleteDraft (req: Request, res: Response, next: NextFunction ) {
