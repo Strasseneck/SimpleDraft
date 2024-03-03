@@ -24,7 +24,7 @@ const DraftCard: FC<Props> = ({ draft }) => {
 
   return (
     <div className='DraftCard'>
-      <a onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
+      <a  className="link" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
         <h3 className='heading'>Title: { draft.title }</h3>
       </a>
       <p className='heading'>Created:</p>
