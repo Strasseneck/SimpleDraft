@@ -12,7 +12,7 @@ interface ChangeListItemProps {
 
 const ChangeListItem: React.FC<ChangeListItemProps> = ({ change, draftTitle, draftId }) => {
     const { description, createdAt, id } = change;
-    const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
+    const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm a');
     const navigate = useNavigate();
 
     const handleDescriptionClick = () => {
