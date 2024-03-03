@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
 import { ChangeResponse } from '../apiService/responseTypes';
 import { DiffMatchPatch, Diff, DiffOperation } from 'diff-match-patch-typescript';
-import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 

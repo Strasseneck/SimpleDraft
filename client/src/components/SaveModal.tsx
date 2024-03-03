@@ -16,7 +16,15 @@ interface SaveModalProps {
   };
 
   const handleClick = () => {
-    handleSaveChange(description); 
+    if (description.trim() !== '' && description.length <= 50) {
+      handleSaveChange(description); 
+    }
+    else if (description.trim() === '') {
+      setDescription('Please describe your change!')
+    }
+    else if (description.length > 50 ) {
+      setDescription('Description too long!')
+    }
   };
 
     return (
