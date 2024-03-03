@@ -5,13 +5,13 @@
     background-color: var(--paper-color);
     background-image:
         repeating-linear-gradient(0deg, transparent, transparent 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
-    height: 20rem;
+    height: fit-content;
     width: 500px;
     border-radius: 3px;
     padding: 25px;
     padding-left: 30px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, .25);
-
+    margin-top: 80px;
 }
 
 .DraftCard p {

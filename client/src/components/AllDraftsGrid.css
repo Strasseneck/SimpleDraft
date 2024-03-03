@@ -1,6 +1,7 @@
 .AllDraftsGrid {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     width: 100vw;
     height: 100vh;
     background-image: url('../assets/corkboard2.jpg');
