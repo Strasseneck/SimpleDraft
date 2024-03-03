@@ -1,19 +1,15 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './DashNavbar.css';
 
 interface Props {
- 
+  onShowModal: () => void;
 }
 
-const DashNavbar: FC<Props> = () => {
+const DashNavbar: FC<Props> = ({ onShowModal }) => {
   
-  const navigate = useNavigate();
-
-
   return (
     <div className='DashNavbar'>
-      <button>New Draft</button>
+      <button onClick={onShowModal}>New Draft</button>
       <h1>SimpleDraft</h1>
     </div>
   );

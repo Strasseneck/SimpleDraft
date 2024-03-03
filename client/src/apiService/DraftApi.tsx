@@ -1,5 +1,6 @@
 import { apiClient } from './ApiClient';
 import { DraftResponse } from './responseTypes';
+import template from '../assets/template';
 
 export const getAllDrafts = async () => {
   return await apiClient<DraftResponse[]>(`draft/all`);
@@ -9,8 +10,13 @@ export const getDraft = async (id: number) => {
   return await apiClient<DraftResponse>(`draft/${id}`);
 };
 
-export const addDraft = async (draftData: DraftResponse) => {
-    return await apiClient<DraftResponse>('draft', 'POST', draftData);
+export const addDraft = async (title: string) => {
+  const draft = {
+    "title": title,
+    "content": template,
+    "UserId": 1,
+  }
+    return await apiClient<DraftResponse>('draft', 'POST', draft);
 };
 
 export const updateDraft = async (id: number, draftData: Partial<DraftResponse>) => {

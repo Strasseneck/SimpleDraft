@@ -52,7 +52,7 @@ const ChangeHistoryView: FC = () => {
 
   // group changes by day
   const groupedChanges = sortedChanges.reduce<{ [key: string]: ChangeResponse[] }>((accumulator, change) => {
-    const date = new Date(change.createdAt).toLocaleDateString();
+    const date = new Date(change.createdAt).toLocaleDateString('en-GB');
     accumulator[date] = accumulator[date] || [];
     accumulator[date].push(change);
     return accumulator;

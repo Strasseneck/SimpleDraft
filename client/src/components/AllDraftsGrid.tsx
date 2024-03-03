@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { DraftResponse } from '../apiService/responseTypes';
 import DraftCard from './DraftCard';
+import './AllDraftsGrid.css'
 
 interface Props {
     drafts: DraftResponse[];
