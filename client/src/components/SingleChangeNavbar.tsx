@@ -1,16 +1,31 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './EditorNavbar.css';
 
 interface Props {
-  onDashboardClick: () => void;
-  onEditorClick: () => void;
-  onDraftHistoryClick: () => void;
   onRevertClick: () => void;
   changeDescription: string;
   draftTitle: string;
+  draftId: number;
 }
 
-const SingleChangeNavbar: FC<Props> = ({ onDashboardClick, onEditorClick, onDraftHistoryClick, onRevertClick, changeDescription, draftTitle }) => {
+const SingleChangeNavbar: FC<Props> = ({ onRevertClick, changeDescription, draftTitle, draftId }) => {
+  console.log(`draftId: ${draftId}`)
+  const navigate = useNavigate()
+
+  const onDashboardClick = () => {
+    navigate('/');
+  }
+
+  const onEditorClick = () => {
+    const id = draftId;
+    navigate('/editor', { state: { id }} )
+  }
+
+  const onDraftHistoryClick = () => {
+    const id = draftId;
+    navigate('/change-history', { state: { id }})
+  }
 
   return (
     <div className='EditorNavbar'>

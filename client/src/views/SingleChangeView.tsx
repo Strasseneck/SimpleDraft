@@ -24,22 +24,6 @@ const SingleChangeView: React.FC = () => {
     const location = useLocation();
     const { id, draftTitle, draftId } = location.state as LocationState;
     const dmp = new DiffMatchPatch;
-    const navigate = useNavigate();
-
-    const handleDashboardClick = () => {
-        // navigate to dashboard
-        navigate('/');
-    };
-
-    const handleEditorClick = (draftId: number) => {
-        const id = draftId;
-        navigate('/editor', { state: { id } });
-    };
-
-    const handleDraftHistoryClick = (draftId: number) => {
-        const id = draftId;
-        navigate('/change-history', { state: { id } });
-    }
 
     const handleRevertClick = () => {
         // revert to that version
@@ -74,15 +58,6 @@ const SingleChangeView: React.FC = () => {
     const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
     const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
 
-
-    // const calculateHeight = () => {
-    //     const rows = displayDiffs.split('\n').length;
-    //     const lineHeight = 20;
-    //     const minHeight = 100;
-    //     const height = Math.max(minHeight, rows * lineHeight);
-    //     return `${height}px`;
-    // };
-
     return (
         <div className='MainPageView'>
             {isReady && change && (
@@ -90,9 +65,7 @@ const SingleChangeView: React.FC = () => {
                     <SingleChangeNavbar
                         changeDescription={change.description}
                         draftTitle={draftTitle}
-                        onDashboardClick={handleDashboardClick}
-                        onEditorClick={() => handleEditorClick(1)}
-                        onDraftHistoryClick={() => handleDraftHistoryClick(1)}
+                        draftId={draftId}
                         onRevertClick={handleRevertClick}
                     />
                     <div className='SingleChangeView'>

@@ -73,7 +73,7 @@ const ChangeHistoryView: FC = () => {
             <div className='SingleDay' key={date}>
               <h2>{date}</h2>
               {changesForDay.map((change, index) => (
-                <ChangeListItem key={index} change={change} draftTitle={draftTitle} onEditorClick={handleEditorClick} />
+                <ChangeListItem key={index} change={change} draftTitle={draftTitle} draftId={id} />
               ))}
             </div>
           ))}

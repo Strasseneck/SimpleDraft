@@ -10,7 +10,7 @@ interface ChangeListItemProps {
     draftId: number;
 }
 
-const ChangeListItem: React.FC<ChangeListItemProps> = ({ change, draftTitle, draftId}) => {
+const ChangeListItem: React.FC<ChangeListItemProps> = ({ change, draftTitle, draftId }) => {
     const { description, createdAt, id } = change;
     const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
     const navigate = useNavigate();
