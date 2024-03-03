@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 // diff/match/patch imports
+import { createDiffs } from '../utils/DiffMatchPatchUtils';
 import { DiffMatchPatch } from 'diff-match-patch-typescript';
 // init diff/ match / patch
-const diffMatchPatch = new DiffMatchPatch;
+// const diffMatchPatch = new DiffMatchPatch;
 // component imports
 import Editor from '../components/Editor';
 import EditorNavbar from '../components/EditorNavbar';
@@ -69,8 +70,9 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    const diffs = diffMatchPatch.diff_main(oldDraft, newDraft);
-    diffMatchPatch.diff_cleanupSemantic(diffs)
+    const diffs = createDiffs(oldDraft, newDraft);
+    // const diffs = diffMatchPatch.diff_main(oldDraft, newDraft);
+    // diffMatchPatch.diff_cleanupSemantic(diffs)
     
     // create change for db
     const newChange: Change = {

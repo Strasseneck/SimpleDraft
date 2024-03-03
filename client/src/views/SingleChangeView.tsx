@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
 import { ChangeResponse } from '../apiService/responseTypes';
-import { DiffMatchPatch, Diff, DiffOperation } from 'diff-match-patch-typescript';
-import DOMPurify from 'dompurify';
-
-
+import { createDiffsHTML } from '../utils/DiffMatchPatchUtils';
 import SingleChangeNavbar from '../components/SingleChangeNavbar';
 import SingleChangePage from '../components/SingleChangePage';
 import './SingleChangeView.css'
@@ -22,7 +19,6 @@ const SingleChangeView: React.FC = () => {
     const [isReady, setIsReady] = useState<boolean>(false);
     const location = useLocation();
     const { id, draftTitle, draftId } = location.state as LocationState;
-    const dmp = new DiffMatchPatch;
 
     const handleRevertClick = () => {
         // revert to that version
@@ -46,17 +42,8 @@ const SingleChangeView: React.FC = () => {
         }
     }, [id]);
 
-    // Function to destructure objects into Diff tuples
-    function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
-        const { operation, text } = diffObject;
-        return [DiffOperation[operation], text];
-    }
-
-    // Map over the array and extract Diff tuples
-    const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
-    const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
-    const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
-
+    const diffsDisplay = createDiffsHTML(diffs);
+    
     return (
         <div className='MainPageView'>
             {isReady && change && (
@@ -68,9 +55,8 @@ const SingleChangeView: React.FC = () => {
                         onRevertClick={handleRevertClick}
                     />
                     <div className='SingleChangeView'>
-                        < SingleChangePage sanitizedHtmlDiffs={sanitizedHtmlDiffs} />
+                        < SingleChangePage sanitizedHtmlDiffs={diffsDisplay} />
                     </div>
-                    {/* <div className='SingleChangeView' dangerouslySetInnerHTML={{ __html: sanitizedHtmlDiffs }} style={{ height: calculateHeight() }} /> */}
                 </div>
             )}
         </div>

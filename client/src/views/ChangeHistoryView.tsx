@@ -63,8 +63,7 @@ const ChangeHistoryView: FC = () => {
     <div className='ChangeHistoryView'>
       <ChangeHistoryNavbar
         draftTitle={draftTitle}
-        onDashboardClick={handleDashboardClick}
-        onEditorClick={() => handleEditorClick(1)}
+        draftId={id}
       />
       <div className='MainView'>
         <div className='ChangeList'>
