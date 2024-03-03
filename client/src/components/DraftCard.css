@@ -1,0 +1,20 @@
+.DraftCard {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    background-color: var(--paper-color);
+    height: fit-content;
+    min-height: 275px;
+    width: 500px;
+    border-radius: 3px;
+    padding: 25px;
+    padding-left: 30px;
+}
+
+.DraftCard p {
+    margin-top: 8px;
+}
+
+.heading {
+    text-decoration: underline;
+}

@@ -1,5 +1,5 @@
 :root {
-  --paper-color: #f6eee3;
+  --paper-color: rgb(235,226,213);
   --dark-bg: #505050;
   --dark: #2e3130;
   --button-color: #3f4444;
@@ -10,6 +10,7 @@
 html {
     box-sizing: border-box;
     font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
     background-color: var(--dark-bg);
   }
   
