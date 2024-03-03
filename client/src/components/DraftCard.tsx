@@ -12,8 +12,7 @@ const DraftCard: FC<Props> = ({ draft }) => {
   const formattedCreatedAt = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
   const formattedUpdatedAt = moment(updatedAt).format('MMMM Do YYYY, h:mm:ss a');
   const changeCount = Changes.length;
-  const lastChange = Changes[0].description;
-
+  const lastChange = Changes.length > 0 ? Changes[0].description : 'No changes yet';
 
   return (
     <div className='DraftCard'>
