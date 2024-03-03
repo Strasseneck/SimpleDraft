@@ -70,6 +70,8 @@ const EditorView: React.FC = () => {
     const oldDraft = draft;
     const newDraft = workingDraft;
     const diffs = diffMatchPatch.diff_main(oldDraft, newDraft);
+    diffMatchPatch.diff_cleanupSemantic(diffs)
+    
     // create change for db
     const newChange: Change = {
       description: description,
