@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashNavbar from '../components/DashNavbar';
+// services
 import { DraftResponse } from '../apiService/responseTypes';
 import { getAllDrafts } from '../apiService/DraftApi';
 import { addDraft } from '../apiService/DraftApi';
-
+// components
+import DashNavbar from '../components/DashNavbar';
 import AllDraftsGrid from '../components/AllDraftsGrid';
 import NewDraftModal from '../components/NewDraftModal';
 
@@ -22,7 +23,6 @@ const DashboardView: FC = () => {
         // get all drafts from api
         const drafts = await getAllDrafts();
         setAllDrafts(drafts);
-        console.log(drafts)
         setIsReady(true);
       } catch (error) {
         console.error(`Error getting all drafts ${error}`)
@@ -30,10 +30,6 @@ const DashboardView: FC = () => {
     }
     retrieveAllDrafts()
   }, [])
-
-  const openEditor = (id: number) => {
-    navigate('/editor', { state: { id } });
-  };
 
   const show = () => {
     setVisible(true);
@@ -48,13 +44,13 @@ const DashboardView: FC = () => {
     const newDraft = await addDraft(title);
     const id = newDraft.id;
     // open editor with new draft
-    navigate('/editor', { state: { id }} )
+    navigate('/editor', { state: { id } })
     try {
-      
+
     } catch (error) {
       console.error(`Error creating draft with title ${title}, ${error}`)
     }
-    
+
   }
 
   return (
@@ -63,7 +59,6 @@ const DashboardView: FC = () => {
       {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} />
       }
       <NewDraftModal visible={visible} onClose={hide} handleNewDraftClick={handleNewDraftClick} />
-      <button onClick={() => openEditor(1)}>Open Editor</button>
     </div>
   );
 };

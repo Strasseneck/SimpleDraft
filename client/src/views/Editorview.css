@@ -15,4 +15,5 @@
 
   .MainEditorView {
     margin: 50px;
+    overflow-y: auto;
   }

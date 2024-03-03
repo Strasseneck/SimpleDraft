@@ -1,21 +1,18 @@
-// react imports
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-// diff/match/patch imports
+// utils
 import { createDiffs } from '../utils/DiffMatchPatchUtils';
-import { DiffMatchPatch } from 'diff-match-patch-typescript';
-// init diff/ match / patch
-// const diffMatchPatch = new DiffMatchPatch;
-// component imports
+// components
 import Editor from '../components/Editor';
 import EditorNavbar from '../components/EditorNavbar';
 import SaveModal from '../components/SaveModal';
-// api imports
+// services
 import { getDraft } from '../apiService/DraftApi';
 import { addChange } from '../apiService/ChangeApi';
 import { updateDraft } from '../apiService/DraftApi';
-// types import
+// types 
 import Change from '../types/ChangeType';
 // styling
 import './Editorview.css';
@@ -70,10 +67,7 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    const diffs = createDiffs(oldDraft, newDraft);
-    // const diffs = diffMatchPatch.diff_main(oldDraft, newDraft);
-    // diffMatchPatch.diff_cleanupSemantic(diffs)
-    
+    const diffs = createDiffs(oldDraft, newDraft); 
     // create change for db
     const newChange: Change = {
       description: description,
@@ -109,7 +103,9 @@ const EditorView: React.FC = () => {
         onShowModal={show}
       />
       <div className='MainEditorView'>
+        <div className='EditorContainer'>
         {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
+        </div>
         <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} />
       </div>
     </div>
