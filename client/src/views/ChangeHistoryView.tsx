@@ -1,10 +1,14 @@
 import { FC, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+//services
 import { ChangeResponse } from '../apiService/responseTypes';
 import { getDraft } from '../apiService/DraftApi';
+// components
 import ChangeHistoryNavbar from '../components/ChangeHistoryNavbar';
 import ChangeListItem from '../components/ChangeListItem';
+// utils
+import { sortGroupChanges } from '../utils/SortChangesUtil';
+// styling
 import './ChangeHistoryView.css';
 
 interface LocationState {
@@ -14,7 +18,6 @@ interface LocationState {
 const ChangeHistoryView: FC = () => {
   const [draftTitle, setDraftTitle] = useState<string>('');
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
-  const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state as LocationState;
 
@@ -36,29 +39,9 @@ const ChangeHistoryView: FC = () => {
     }
   }, [id]);
 
-
-  // navigation
-  const handleDashboardClick = () => {
-    // navigate to dashboard
-    navigate('/');
-  };
-
-  const handleEditorClick = (id: number) => {
-    navigate('/editor', { state: { id } });
-  }
-
-  // sort changes by date
-  const sortedChanges = draftChanges.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-
-  // group changes by day
-  const groupedChanges = sortedChanges.reduce<{ [key: string]: ChangeResponse[] }>((accumulator, change) => {
-    const date = new Date(change.createdAt).toLocaleDateString('en-GB');
-    accumulator[date] = accumulator[date] || [];
-    accumulator[date].push(change);
-    return accumulator;
-  }, {});
-
-
+  // sort changes by date and divide by day
+  const groupedChanges = sortGroupChanges(draftChanges);
+  
   return (
     <div className='ChangeHistoryView'>
       <ChangeHistoryNavbar
@@ -67,10 +50,10 @@ const ChangeHistoryView: FC = () => {
       />
       <div className='MainView'>
         <div className='ChangeList'>
-        <h1 className='HistoryHeader'>History for {draftTitle}</h1>
+        <h1 className='HistoryHeader'>{draftTitle}</h1>
           {Object.entries(groupedChanges).map(([date, changesForDay]) => (
             <div className='SingleDay' key={date}>
-              <h2>{date}</h2>
+              <h2 className='DateHeader'>{date}</h2>
               {changesForDay.map((change, index) => (
                 <ChangeListItem key={index} change={change} draftTitle={draftTitle} draftId={id} />
               ))}

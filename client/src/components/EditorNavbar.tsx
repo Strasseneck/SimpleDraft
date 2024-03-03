@@ -5,17 +5,15 @@ interface Props {
   onDashboardClick: () => void;
   onChangeHistoryClick: () => void;
   onShowModal: () => void;
-  draftTitle: string;
 }
 
-const EditorNavbar: FC<Props> = ({ onDashboardClick, onChangeHistoryClick, onShowModal, draftTitle}) => {
+const EditorNavbar: FC<Props> = ({ onDashboardClick, onChangeHistoryClick, onShowModal }) => {
   
   return (
     <div className='EditorNavbar'>
       <button onClick={onDashboardClick}>Dashboard</button>
       <button onClick={onChangeHistoryClick}>Draft History</button>
       <button onClick={onShowModal}>Save Change</button>
-      <h2>{ draftTitle }</h2>
     </div>
   );
 };

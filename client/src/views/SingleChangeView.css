@@ -1,4 +1,5 @@
 .SingleChangeView {
+    font-family: 'Courier New', Courier, monospace;
     height: 100%;
     display: flex;
     justify-content: center; 

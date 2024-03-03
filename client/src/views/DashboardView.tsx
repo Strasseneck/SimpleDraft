@@ -40,13 +40,12 @@ const DashboardView: FC = () => {
   };
 
   const handleNewDraftClick = async (title: string) => {
-    // try to create a new draft
+    try {
+       // try to create a new draft
     const newDraft = await addDraft(title);
     const id = newDraft.id;
     // open editor with new draft
     navigate('/editor', { state: { id } })
-    try {
-
     } catch (error) {
       console.error(`Error creating draft with title ${title}, ${error}`)
     }

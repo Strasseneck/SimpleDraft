@@ -9,7 +9,7 @@ interface Props {
   draftId: number;
 }
 
-const SingleChangeNavbar: FC<Props> = ({ onRevertClick, changeDescription, draftTitle, draftId }) => {
+const SingleChangeNavbar: FC<Props> = ({ onRevertClick, draftId }) => {
   console.log(`draftId: ${draftId}`)
   const navigate = useNavigate()
 
@@ -33,8 +33,6 @@ const SingleChangeNavbar: FC<Props> = ({ onRevertClick, changeDescription, draft
       <button onClick={onEditorClick}>Editor</button>
       <button onClick={onDraftHistoryClick}>Draft History</button>
       <button onClick={onRevertClick}>Revert</button>
-      <h2>{draftTitle}</h2>
-      <h2>{changeDescription}</h2>
     </div>
   );
 };

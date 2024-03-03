@@ -16,7 +16,15 @@ interface NewDraftModalProps {
   };
 
   const handleClick = () => {
-    handleNewDraftClick(title); 
+    if (title.trim() === '') {
+      setTitle('A draft needs a Title!')
+    }
+    else if (title.length > 30) {
+      setTitle('That title is too long!')
+    }
+    else {
+      handleNewDraftClick(title); 
+    }
   };
 
     return (
