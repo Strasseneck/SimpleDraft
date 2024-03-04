@@ -1,5 +1,6 @@
-import { DiffMatchPatch, DiffOperation, Diff } from "diff-match-patch-typescript";
+import { DiffMatchPatch, DiffOperation, Diff, PatchObject, PatchApplyArray } from "diff-match-patch-typescript";
 import DOMPurify from "dompurify";
+import { ChangeResponse, DraftResponse } from "../apiService/responseTypes";
 
 const dmp = new DiffMatchPatch;
 
@@ -10,7 +11,7 @@ export const createDiffs = (oldDraft: string, newDraft: string) => {
     return diffs;
 };
 
-// function to destructure objects into Diff tuples
+// function to destructure objects into Diff tuples, because of weird mismatch in my types
 function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
     const { operation, text } = diffObject;
     return [DiffOperation[operation], text];
@@ -23,3 +24,40 @@ export const createDiffsHTML = (diffs: Diff[]) => {
     const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
     return sanitizedHtmlDiffs;
 };
+
+// function to revert a draft to a previous state
+export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse) => {
+    // all changes prior to the revert to point
+    const revertChanges: ChangeResponse[] = draft.Changes.filter((change) => change.id >= revertToChange.id);
+
+    const revertDiffs: Diff[] = revertChanges.flatMap(change =>
+        change.Diffs.map(diffObject => extractDiffFromObject(diffObject))
+    );
+
+    const currentContent = draft.content;
+    // create patches
+    const patches: PatchObject[] = dmp.patch_make(currentContent, revertDiffs);
+
+    // reverse patches
+    const reversedPatches: PatchObject[] = patches.map((patch) => reversePatch(patch));
+
+    // apply patches
+    const revertedContent: PatchApplyArray = dmp.patch_apply(reversedPatches,currentContent );
+    return revertedContent[0];
+
+    // return modified draft
+}
+
+const reversePatch = (patch: PatchObject): PatchObject => {
+    return {
+        diffs: patch.diffs.map(([op, val]) => [
+            op * -1, // Reverse the operation
+            val
+        ]),
+        start1: patch.start2,
+        start2: patch.start1,
+        length1: patch.length2,
+        length2: patch.length1
+    };
+};
+

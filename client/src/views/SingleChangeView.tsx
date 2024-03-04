@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
+import { Diff } from 'diff-match-patch-typescript';
 import { ChangeResponse } from '../apiService/responseTypes';
 import { createDiffsHTML } from '../utils/DiffMatchPatchUtils';
 import SingleChangeNavbar from '../components/SingleChangeNavbar';
@@ -20,18 +21,15 @@ const SingleChangeView: React.FC = () => {
     const location = useLocation();
     const { id, draftTitle, draftId } = location.state as LocationState;
 
-    const handleRevertClick = () => {
-        // revert to that version
-    };
-
     useEffect(() => {
         if (id !== undefined && id !== null) {
             async function retrieveChange() {
                 try {
                     // get change from api
                     const currentChange = await getChange(id);
-                    const { Diffs } = currentChange;
-                    setDiffs(Diffs)
+                    const Diffs  = currentChange.Diffs;
+                    console.log(Diffs);
+                    setDiffs(Diffs);
                     setChange(currentChange);
                     setIsReady(true);
                 } catch (error) {
@@ -49,10 +47,9 @@ const SingleChangeView: React.FC = () => {
             {isReady && change && (
                 <div>
                     <SingleChangeNavbar
-                        changeDescription={change.description}
+                        change={change}
                         draftTitle={draftTitle}
                         draftId={draftId}
-                        onRevertClick={handleRevertClick}
                     />
                     <div className='SingleChangeView'>
                         < SingleChangePage sanitizedHtmlDiffs={diffsDisplay} />
