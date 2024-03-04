@@ -1,4 +1,5 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
+import HTMLReactParser from 'html-react-parser/lib/index';
 import './SingleChangePage.css';
 
 interface Props {
@@ -6,19 +7,11 @@ interface Props {
 }
 
 const SingleChangePage: FC<Props> = ({ sanitizedHtmlDiffs }) => {
-    useEffect(() => {
-        const contentElement = document.querySelector('.SingleChangePage') as HTMLElement;
-        if (contentElement) {
-            contentElement.style.height = "auto";
-            contentElement.style.height = `${contentElement.scrollHeight}px`;
-        }
-    }, []);
 
     return (
-        <div
-            className='SingleChangePage'
-            dangerouslySetInnerHTML={{ __html: sanitizedHtmlDiffs }}
-        />
+        <div className='SingleChangePage' >
+            <div>{ HTMLReactParser(sanitizedHtmlDiffs)}</div>
+        </div>
     );
 };
 

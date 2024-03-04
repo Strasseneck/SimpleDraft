@@ -6,6 +6,7 @@
     background-image:
         repeating-linear-gradient(0deg, transparent, transparent 1.5rem, #DDD 1px, #DDD calc(1.5rem + 1px));
     height: fit-content;
+    min-height: 200px;
     width: 500px;
     border-radius: 3px;
     padding: 25px;
@@ -24,4 +25,34 @@
 
 .link:hover {
    color: darkblue;
+}
+
+.CloseButton {
+    align-self: flex-end;
+    width: 30px;
+    height: 30px;
+    background: none;
+    color: black;
+    font-size: x-large;
+}
+
+.CloseButton:hover {
+    font-family: Arial, Helvetica, sans-serif;
+    background: none;
+    color: red;
+    transform: scale(1.3);
+}
+
+.DeleteButton {
+    height: 35px;
+    width: 75px;
+    margin: 10px;
+}
+
+.ButtonContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
 }

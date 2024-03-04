@@ -95,6 +95,7 @@ export async function deleteDraft (req: Request, res: Response, next: NextFuncti
       // doesn't exist, return error msg
       res.status(400);
       res.json('No draft with that id!');
+      return;
     } 
     else {
       // exists, delete
@@ -106,5 +107,4 @@ export async function deleteDraft (req: Request, res: Response, next: NextFuncti
     res.status(400);
     res.json(`Error deleting draft ${error}`);  
   }
-
 }

@@ -1,11 +1,17 @@
 import { FC } from 'react';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { ChangeResponse } from '../apiService/responseTypes';
-import { revertDraft } from '../utils/DiffMatchPatchUtils';
-import './EditorNavbar.css';
+// services
 import { getDraft } from '../apiService/DraftApi';
-import { getChange } from '../apiService/ChangeApi';
+import { getChange } from '../apiService/ChangeApi'
+// types
+import { ChangeResponse } from '../apiService/responseTypes';
+// utils
+import { revertDraft } from '../utils/DiffMatchPatchUtils';
 import { saveChange } from '../utils/SaveChangeUtil';
+//  styling
+import './EditorNavbar.css';
+
 
 interface Props {
   change: ChangeResponse;
@@ -35,7 +41,8 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
     const draft = await getDraft(draftId);
     const endChange = await getChange(changeId)
     const revertedContent = revertDraft(draft, endChange);
-    const description = `Reverted to state of script from ${change.createdAt}`;
+    const formattedCreatedAt = moment(change.createdAt).format('MMMM Do YYYY, h:mm a');
+    const description = `Reverted to state of script from ${formattedCreatedAt}`;
     const save = await saveChange(description, draft.content,revertedContent, draftId )
     if (save) {
       onEditorClick();

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+// services 
 import { getChange } from '../apiService/ChangeApi';
+// types
 import { Diff } from 'diff-match-patch-typescript';
 import { ChangeResponse } from '../apiService/responseTypes';
+// utils
 import { createDiffsHTML } from '../utils/DiffMatchPatchUtils';
+// components
 import SingleChangeNavbar from '../components/SingleChangeNavbar';
 import SingleChangePage from '../components/SingleChangePage';
+// styling
 import './SingleChangeView.css'
 
 interface LocationState {
@@ -28,7 +33,6 @@ const SingleChangeView: React.FC = () => {
                     // get change from api
                     const currentChange = await getChange(id);
                     const Diffs  = currentChange.Diffs;
-                    console.log(Diffs);
                     setDiffs(Diffs);
                     setChange(currentChange);
                     setIsReady(true);

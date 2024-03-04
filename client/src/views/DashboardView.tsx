@@ -15,8 +15,7 @@ import './DashboardView.css'
 const DashboardView: FC = () => {
   const [allDrafts, setAllDrafts] = useState<DraftResponse[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(false);
-
+  const [newVisible, setNewVisible] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,15 +30,16 @@ const DashboardView: FC = () => {
       }
     }
     retrieveAllDrafts()
-  }, [])
+  }, [allDrafts])
 
-  const show = () => {
-    setVisible(true);
+  const showNew = () => {
+    setNewVisible(true);
   };
 
-  const hide = () => {
-    setVisible(false);
+  const hideNew = () => {
+    setNewVisible(false);
   };
+
 
   const handleNewDraftClick = async (title: string) => {
     try {
@@ -51,15 +51,18 @@ const DashboardView: FC = () => {
     } catch (error) {
       console.error(`Error creating draft with title ${title}, ${error}`)
     }
+  }
 
+  const handleDeleteDraft = (deleteId: number) => {
+    setAllDrafts(allDrafts.filter((draft) => draft.id !== deleteId))
   }
 
   return (
     <div className='DashboardView'>
-      < DashNavbar onShowModal={show} />
-      {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} />
+      < DashNavbar onShowModal={showNew} />
+      {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} handleDeleteDraft={handleDeleteDraft} />
       }
-      <NewDraftModal visible={visible} onClose={hide} handleNewDraftClick={handleNewDraftClick} />
+      <NewDraftModal visible={newVisible} onClose={hideNew} handleNewDraftClick={handleNewDraftClick} />
     </div>
   );
 };
