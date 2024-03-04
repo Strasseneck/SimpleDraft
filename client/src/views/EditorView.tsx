@@ -1,9 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 // utils
-import { createDiffs } from '../utils/DiffMatchPatchUtils';
 import { saveChange } from '../utils/SaveChangeUtil';
 // components
 import Editor from '../components/Editor';
@@ -11,10 +10,6 @@ import EditorNavbar from '../components/EditorNavbar';
 import SaveModal from '../components/SaveModal';
 // services
 import { getDraft } from '../apiService/DraftApi';
-import { addChange } from '../apiService/ChangeApi';
-import { updateDraft } from '../apiService/DraftApi';
-// types 
-import Change from '../types/ChangeType';
 // styling
 import './Editorview.css';
 
@@ -72,7 +67,7 @@ const EditorView: React.FC = () => {
     if (save) {
       setDraft(workingDraft);
       hide();
-    }   
+    }
   };
 
   const show = () => {
@@ -97,7 +92,7 @@ const EditorView: React.FC = () => {
       />
       <div className='MainEditorView'>
         <div className='EditorContainer'>
-        {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
+          {isReady && <Editor workingDraft={workingDraft} onWorkingDraftChange={handleWorkingDraftChange} />}
         </div>
         <SaveModal visible={visible} onClose={hide} handleSaveChange={handleSaveChange} />
       </div>

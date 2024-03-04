@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+// styling
 import './Editor.css';
 
 interface EditorProps {

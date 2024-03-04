@@ -8,6 +8,8 @@ interface Props {
 }
 
 const EditorNavbar: FC<Props> = ({ onDashboardClick, onChangeHistoryClick, onShowModal }) => {
+
+
   
   return (
     <div className='EditorNavbar'>
