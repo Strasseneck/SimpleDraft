@@ -8,6 +8,8 @@ import { addDraft } from '../apiService/DraftApi';
 import DashNavbar from '../components/DashNavbar';
 import AllDraftsGrid from '../components/AllDraftsGrid';
 import NewDraftModal from '../components/NewDraftModal';
+// styling
+import './DashboardView.css'
 
 
 const DashboardView: FC = () => {
@@ -41,11 +43,11 @@ const DashboardView: FC = () => {
 
   const handleNewDraftClick = async (title: string) => {
     try {
-       // try to create a new draft
-    const newDraft = await addDraft(title);
-    const id = newDraft.id;
-    // open editor with new draft
-    navigate('/editor', { state: { id } })
+      // try to create a new draft
+      const newDraft = await addDraft(title);
+      const id = newDraft.id;
+      // open editor with new draft
+      navigate('/editor', { state: { id } })
     } catch (error) {
       console.error(`Error creating draft with title ${title}, ${error}`)
     }
@@ -53,7 +55,7 @@ const DashboardView: FC = () => {
   }
 
   return (
-    <div>
+    <div className='DashboardView'>
       < DashNavbar onShowModal={show} />
       {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} />
       }

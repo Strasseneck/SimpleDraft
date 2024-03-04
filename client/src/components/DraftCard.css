@@ -11,7 +11,7 @@
     padding: 25px;
     padding-left: 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-top: 80px;
+    margin-top: 30px;
 }
 
 .DraftCard p {
@@ -21,7 +21,6 @@
 .heading {
     text-decoration: underline;
 }
-
 
 .link:hover {
    color: darkblue;

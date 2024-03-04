@@ -1,8 +1,6 @@
 .MainView {
   height: 100%;
   width: 100vw;
-  background-image: url('../assets/corkboard2.jpg');
-  background-size: contain;
 }
 
 .ChangeHistoryNavbar {

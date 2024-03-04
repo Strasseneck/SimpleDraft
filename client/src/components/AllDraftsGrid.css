@@ -3,8 +3,4 @@
     flex-direction: row;
     flex-wrap: wrap-reverse;
     justify-content: space-evenly;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('../assets/corkboard2.jpg');
-    background-size: cover;
 };
