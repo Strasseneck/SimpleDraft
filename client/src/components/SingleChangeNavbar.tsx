@@ -5,6 +5,7 @@ import { revertDraft } from '../utils/DiffMatchPatchUtils';
 import './EditorNavbar.css';
 import { getDraft } from '../apiService/DraftApi';
 import { getChange } from '../apiService/ChangeApi';
+import { saveChange } from '../utils/SaveChangeUtil';
 
 interface Props {
   change: ChangeResponse;
@@ -33,8 +34,12 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
   const onRevertClick = async () => {
     const draft = await getDraft(draftId);
     const endChange = await getChange(changeId)
-    const test = revertDraft(draft, endChange);
-    console.log(test);
+    const revertedContent = revertDraft(draft, endChange);
+    const description = `Reverted to state of script from ${change.createdAt}`;
+    const save = await saveChange(description, draft.content,revertedContent, draftId )
+    if (save) {
+      onEditorClick();
+    }
 
   }
 
