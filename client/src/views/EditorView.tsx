@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 // utils
 import { createDiffs } from '../utils/DiffMatchPatchUtils';
+import { saveChange } from '../utils/SaveChangeUtil';
 // components
 import Editor from '../components/Editor';
 import EditorNavbar from '../components/EditorNavbar';
@@ -67,18 +68,11 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    const diffs = createDiffs(oldDraft, newDraft); 
-    // create change for db
-    const newChange: Change = {
-      description: description,
-      DraftId: id,
-      Diffs: diffs
-    };
-    await addChange(newChange);
-    await updateDraft(id, { content: workingDraft })
-    // update draft state
-    setDraft(workingDraft);
-    hide();
+    const save = await saveChange(description, oldDraft, newDraft, id)
+    if (save) {
+      setDraft(workingDraft);
+      hide();
+    }   
   };
 
   const show = () => {

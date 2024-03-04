@@ -27,6 +27,8 @@ export const createDiffsHTML = (diffs: Diff[]) => {
 
 // function to revert a draft to a previous state
 export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse) => {
+    const currentContent = draft.content;
+
     // all changes prior to the revert to point
     const revertChanges: ChangeResponse[] = draft.Changes.filter((change) => change.id >= revertToChange.id);
 
@@ -34,7 +36,6 @@ export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse
         change.Diffs.map(diffObject => extractDiffFromObject(diffObject))
     );
 
-    const currentContent = draft.content;
     // create patches
     const patches: PatchObject[] = dmp.patch_make(currentContent, revertDiffs);
 
@@ -43,9 +44,9 @@ export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse
 
     // apply patches
     const revertedContent: PatchApplyArray = dmp.patch_apply(reversedPatches,currentContent );
-    return revertedContent[0];
-
+    
     // return modified draft
+    return revertedContent[0];  
 }
 
 const reversePatch = (patch: PatchObject): PatchObject => {
