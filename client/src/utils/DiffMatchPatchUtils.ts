@@ -26,7 +26,33 @@ export const createDiffsHTML = (diffs: Diff[]) => {
 };
 
 // function to revert a draft to a previous state
-export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse) => {
+export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange: ChangeResponse) => {
+    const currentContent = draft.content;
+
+    // all changes prior to the revert to point
+    const revertChanges: ChangeResponse[] = draft.Changes.filter((change) => change.id >= revertToChange.id);
+
+    const revertDiffs: Diff[] = revertChanges.flatMap(change =>
+        change.Diffs.map(diffObject => extractDiffFromObject(diffObject))
+    );
+
+    const reversedDiffs: Diff[] = revertDiffs.map(([op, val]) => [
+        // Reverse the operation
+        op * -1,
+        val
+    ]);
+    
+    const patches: PatchObject[] = dmp.patch_make(currentContent, reversedDiffs);
+    
+    const patchApplyResult: PatchApplyArray = dmp.patch_apply(patches, currentContent);
+    return patchApplyResult[0];
+
+    const trues = patchApplyResult[1].filter((el) => el === true);
+    console.log(`Reversed diffs ${trues.length}`);   
+}
+
+
+export const revertDraftUsingReversedPatches = (draft: DraftResponse, revertToChange: ChangeResponse) => {
     const currentContent = draft.content;
 
     // all changes prior to the revert to point
@@ -43,10 +69,13 @@ export const revertDraft = (draft: DraftResponse, revertToChange: ChangeResponse
     const reversedPatches: PatchObject[] = patches.map((patch) => reversePatch(patch));
 
     // apply patches
-    const revertedContent: PatchApplyArray = dmp.patch_apply(reversedPatches,currentContent );
+    const patchApplyResult: PatchApplyArray = dmp.patch_apply(reversedPatches,currentContent );
+    
+    return patchApplyResult[0];
     
     // return modified draft
-    return revertedContent[0];  
+    const trues = patchApplyResult[1].filter((el) => el === true);
+    console.log(`Reversed patches ${trues.length}`);  
 }
 
 const reversePatch = (patch: PatchObject): PatchObject => {
@@ -61,4 +90,6 @@ const reversePatch = (patch: PatchObject): PatchObject => {
         length2: patch.length1
     };
 };
+
+
 
