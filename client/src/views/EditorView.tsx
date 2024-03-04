@@ -89,6 +89,8 @@ const EditorView: React.FC = () => {
         onDashboardClick={handleDashboardClick}
         onChangeHistoryClick={() => handleChangeHistoryClick(id)}
         onShowModal={show}
+        draft={workingDraft}
+        title={draftTitle}
       />
       <div className='MainEditorView'>
         <div className='EditorContainer'>
