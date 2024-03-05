@@ -13,7 +13,8 @@ export async function getChange(req: Request, res: Response, next: NextFunction)
         {
           model: Patch,
           include: [{ model: Diff, as: 'diffs' }] // Include associated Diffs within each Patch
-        }
+        },
+        Diff // and for the change
       ]
     });
 
@@ -51,6 +52,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
           operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
           text: diff[1],
           PatchId: newPatch.id,
+          ChangeId: newChange.id,
         });
       }));
 
@@ -58,12 +60,18 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
     }));
 
     // Include the associated patches and diffs when fetching the newly created change
-    const changeWithDiffsAndPatches = await Change.findByPk(newChange.id, {
-      include: [{ model: Patch, include: [{ model: Diff, as: 'diffs' }] }],
+    const change = await Change.findByPk(newChange.id, {
+      include: [
+        {
+          model: Patch,
+          include: [{ model: Diff, as: 'diffs' }]
+        },
+        Diff // Include associated Diffs directly under the Change model
+      ]
     });
 
     // Return the change with associated patches and diffs
-    res.status(201).json(changeWithDiffsAndPatches);
+    res.status(201).json(change);
   } catch (error) {
     res.status(400).json(`Error saving change ${error}`);
   }

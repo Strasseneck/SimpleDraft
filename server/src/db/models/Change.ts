@@ -19,6 +19,7 @@ class Change extends Model<ChangeAttributes> implements ChangeAttributes {
     public DraftId!: number;
 
     public readonly patches?: Patch[]; // for patches that can apply the change
+    public readonly diffs?: Diff[]; // for diffs that make up the change
 }
 
 Change.init({
@@ -51,5 +52,8 @@ Change.init({
 
 Change.hasMany(Patch, { constraints: true, onDelete: 'CASCADE'});
 Patch.belongsTo(Change);
+
+Change.hasMany(Diff, { constraints: true, onDelete: 'CASCADE'});
+Diff.belongsTo(Change);
 
 export default Change 
