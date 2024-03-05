@@ -3,12 +3,12 @@ import { DataTypes, Model } from "sequelize"
 import { DiffOperation } from "diff-match-patch-typescript";
 
   interface DiffAttributes {
-    id: number;
+    id?: number;
     operation: keyof typeof DiffOperation;
     text: string;
     createdAt?: Date;
     updatedAt?: Date;
-    ChangeId: number;
+    PatchId: number;
   }
 
   class Diff extends Model<DiffAttributes> implements DiffAttributes {
@@ -17,7 +17,7 @@ import { DiffOperation } from "diff-match-patch-typescript";
     public text!: string;
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
-    public ChangeId!: number;
+    public PatchId!: number;
   }
 
 Diff.init(
@@ -45,7 +45,7 @@ Diff.init(
       type: DataTypes.DATE,
       allowNull: false
     },
-    ChangeId: {
+    PatchId: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

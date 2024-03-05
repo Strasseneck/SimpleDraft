@@ -33,20 +33,13 @@ export async function getChange (req: Request, res: Response, next: NextFunction
 export async function addChange(req: Request, res: Response, next: NextFunction) {
   const diffs = req.body.Diffs;
   const patches = req.body.Patches;
+
   try {
     // Create a new change instance
     const newChange = await Change.create(req.body);
 
-    // Create the diffs and associate them with the new change
-    await Promise.all(
-      diffs.map(async (diff: any) => {
-        // return await Diff.create({ ...diffData, ChangeId: newChange.id });
-        return await Diff.create({ operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL", text: diff[1], ChangeId: newChange.id });
-      })
-    );
-    
-    // Create the patches and associate them with new change
-    await Promise.all(
+    // Create the patches and associate them with the new change
+    const createdPatches = await Promise.all(
       patches.map(async (patch: any) => {
         return await Patch.create({
           start1: patch.start1,
@@ -58,9 +51,25 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
       })
     );
 
+    // For each patch, create and associate the diffs
+    await Promise.all(
+      createdPatches.map(async (patch) => {
+        return await Promise.all(
+          diffs.map(async (diff: any) => {
+            const newDiff = await Diff.create({
+              operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
+              text: diff[1],
+              PatchId: patch.id, // Associate the diff with the current patch
+            });
+            return newDiff;
+          })
+        );
+      })
+    );
+
     // Include the associated diffs and patches when fetching the newly created change
     const changeWithDiffsAndPatches = await Change.findByPk(newChange.id, {
-      include: [Diff, Patch],
+      include: [{ model: Patch, include: [Diff] }],
     });
 
     // Return the change with associated diffs and patches
@@ -69,6 +78,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
     res.status(400).json(`Error saving change ${error}`);
   }
 }
+
 
   
 export async function deleteChange (req: Request, res: Response, next: NextFunction ) {

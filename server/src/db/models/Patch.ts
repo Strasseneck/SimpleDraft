@@ -23,6 +23,9 @@ class Patch extends Model<PatchAttributes> implements PatchAttributes {
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
     public ChangeId!: number;
+
+    public readonly diffs?: Diff[]; // for diffs that make up the patch
+
 }
 
 Patch.init(
@@ -67,5 +70,8 @@ Patch.init(
       modelName: 'Patch'
     }
   );
+
+  Patch.hasMany(Diff, {constraints: true, onDelete: 'CASCADE'});
+  Diff.belongsTo(Patch);
   
   export default Patch;
