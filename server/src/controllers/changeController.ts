@@ -10,8 +10,10 @@ export async function getChange(req: Request, res: Response, next: NextFunction)
     // Try to retrieve the change
     const change = await Change.findByPk(changeId, {
       include: [
-        Diff, // Include associated Diffs within the Change
-        Patch // Include associated Patches within the Change
+        {
+          model: Patch,
+          include: [{ model: Diff, as: 'diffs' }] // Include associated Diffs within each Patch
+        }
       ]
     });
 

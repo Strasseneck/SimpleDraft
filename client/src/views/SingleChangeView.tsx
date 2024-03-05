@@ -32,8 +32,8 @@ const SingleChangeView: React.FC = () => {
                 try {
                     // get change from api
                     const currentChange = await getChange(id);
-                    const Diffs  = currentChange.Diffs;
-                    setDiffs(Diffs);
+                    const changeDiffs = currentChange.Patches.map((patch) => patch.diffs)
+                    setDiffs(changeDiffs[0]);
                     setChange(currentChange);
                     setIsReady(true);
                 } catch (error) {
@@ -45,7 +45,7 @@ const SingleChangeView: React.FC = () => {
     }, [id]);
 
     const diffsDisplay = createDiffsHTML(diffs);
-    
+
     return (
         <div className='MainPageView'>
             {isReady && change && (
