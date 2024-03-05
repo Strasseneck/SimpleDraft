@@ -29,8 +29,8 @@ export const createDraft = (draft: DraftResponse) => {
         const patches = transformPatchesArray(change.Patches);
         // update the draft by applying the patch
         latestDraft = dmp.patch_apply(patches, latestDraft)[0]
-        console.log(latestDraft);
     })
+    console.log(latestDraft)
     return latestDraft;
 }
 
