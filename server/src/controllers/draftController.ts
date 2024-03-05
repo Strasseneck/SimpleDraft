@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import Draft from '../db/models/Draft'
 import Change from '../db/models/Change';
 import Diff from '../db/models/Diff';
+import Patch from '../db/models/Patch';
 
 export async function getAllDrafts (req: Request, res: Response, next: NextFunction ) {
   try {
@@ -11,7 +12,7 @@ export async function getAllDrafts (req: Request, res: Response, next: NextFunct
 
   } catch (error) {
     res.status(400);
-    res.json(`Eroor retrieving all drafts ${error}`)
+    res.json(`Error retrieving all drafts ${error}`)
   }
 }
 
@@ -23,7 +24,10 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
       include: [
         {
           model: Change, // include Changes associated with Draft
-          include: [Diff] // include associated Diffs within each Change
+          include: [
+            Diff, // include associated Diffs within each Change
+            Patch, // include associated patches
+          ],        
         }
       ]    })
     if (!draft) {

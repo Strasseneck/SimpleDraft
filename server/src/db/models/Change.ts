@@ -1,6 +1,7 @@
 import { sequelize } from "../index"
 import { DataTypes, Model } from "sequelize"
 import Diff from "./Diff"
+import Patch from "./Patch"
 
 interface ChangeAttributes {
     id: number,
@@ -18,7 +19,7 @@ class Change extends Model<ChangeAttributes> implements ChangeAttributes {
     public DraftId!: number;
 
     public readonly diffs?: Diff[]; // for diffs that make up the change
-
+    public readonly patches?: Patch[]; // for patches that can apply the change
 }
 
 Change.init({
@@ -51,5 +52,8 @@ Change.init({
 
 Change.hasMany(Diff, { constraints: true, onDelete: 'CASCADE'});
 Diff.belongsTo(Change);
+
+Change.hasMany(Patch, { constraints: true, onDelete: 'CASCADE'});
+Patch.belongsTo(Change);
 
 export default Change 

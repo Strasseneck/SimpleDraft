@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import Change from '../db/models/Change'
 import Diff from '../db/models/Diff';
+import Patch from '../db/models/Patch';
 import { DiffOperation } from 'diff-match-patch-typescript';
 
 export async function getChange (req: Request, res: Response, next: NextFunction ) {
@@ -8,7 +9,10 @@ export async function getChange (req: Request, res: Response, next: NextFunction
   try {
     // try to retrieve
     const change = await Change.findByPk(changeId, {
-      include: [Diff]
+      include: [
+        Diff, // include associated Diffs within each Change
+        Patch, // include associated patches
+      ], 
     })
     if (!change) {
       // doesn't exist, return error msg
