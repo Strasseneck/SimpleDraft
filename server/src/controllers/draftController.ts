@@ -4,37 +4,50 @@ import Change from '../db/models/Change';
 import Diff from '../db/models/Diff';
 import Patch from '../db/models/Patch';
 
-export async function getAllDrafts (req: Request, res: Response, next: NextFunction ) {
+export async function getAllDrafts(req: Request, res: Response, next: NextFunction) {
   try {
-    const drafts = await Draft.findAll({include: [{ model: Change, include: [Diff]}]})
-    res.status(200);
-    res.json(drafts);
+    const drafts = await Draft.findAll({ 
+      include: [
+        {
+          model: Change,
+          include: [
+            {
+              model: Patch,
+              include: [Diff] // Include associated Diffs within each Patch
+            }
+          ]
+        }
+      ]
+    });
 
+    res.status(200).json(drafts);
   } catch (error) {
-    res.status(400);
-    res.json(`Error retrieving all drafts ${error}`)
+    res.status(500).json(`Error retrieving drafts: ${error}`);
   }
 }
 
-export async function getDraft (req: Request, res: Response, next: NextFunction ) {
+export async function getDraft(req: Request, res: Response, next: NextFunction) {
   const draftId = req.params.id;
   try {
     // try to retrieve
     const draft = await Draft.findByPk(draftId, {
       include: [
         {
-          model: Change, // include Changes associated with Draft
+          model: Change,
           include: [
-            Diff, // include associated Diffs within each Change
-            Patch, // include associated patches
-          ],        
+            {
+              model: Patch,
+              include: [Diff] // Include associated Diffs within each Patch
+            }
+          ]
         }
-      ]    })
+      ]
+    })
     if (!draft) {
       // doesn't exist, return error msg
       res.status(400);
       res.json('No draft with that id!');
-    } 
+    }
     else {
       // exists return draft
       res.status(200);
@@ -42,14 +55,14 @@ export async function getDraft (req: Request, res: Response, next: NextFunction 
     }
   } catch (error) {
     res.status(400);
-    res.json(`Error retieving draft ${error}`);  
+    res.json(`Error retrieving draft ${error}`);
   }
 }
 
-export async function addDraft (req: Request, res: Response, next: NextFunction ) {
+export async function addDraft(req: Request, res: Response, next: NextFunction) {
   try {
     // check if draft already exists
-    const existingDraft = await Draft.findOne({ where: { title: req.body.title}})
+    const existingDraft = await Draft.findOne({ where: { title: req.body.title } })
     if (existingDraft) {
       // exists
       res.status(400);
@@ -61,14 +74,14 @@ export async function addDraft (req: Request, res: Response, next: NextFunction 
       // return the draft
       res.status(201);
       res.json(newDraft);
-    }   
+    }
   } catch (error) {
     res.status(400);
-    res.json(`Error saving draft ${error}`);  
-  } 
+    res.json(`Error saving draft ${error}`);
+  }
 }
-  
-export async function updateDraft (req: Request, res: Response, next: NextFunction ) {
+
+export async function updateDraft(req: Request, res: Response, next: NextFunction) {
   try {
     // check a draft with id exists
     const existingDraft = await Draft.findByPk(req.params.id);
@@ -76,21 +89,21 @@ export async function updateDraft (req: Request, res: Response, next: NextFuncti
       // doesn't exist
       res.status(400);
       res.json(`No draft with id ${req.params.id} found`);
-    } 
+    }
     else {
       // exists update and return
-      const updatedDraft = await existingDraft.update({ content: req.body.content})
+      const updatedDraft = await existingDraft.update({ content: req.body.content })
       await updatedDraft.save();
       res.json(updatedDraft);
     }
-    
+
   } catch (error) {
     res.status(400);
     res.json(`Error updating draft with id ${req.params.id} ${error}`)
   }
 }
-  
-export async function deleteDraft (req: Request, res: Response, next: NextFunction ) {
+
+export async function deleteDraft(req: Request, res: Response, next: NextFunction) {
   const draftId = req.params.id;
   try {
     // try to retrieve
@@ -100,7 +113,7 @@ export async function deleteDraft (req: Request, res: Response, next: NextFuncti
       res.status(400);
       res.json('No draft with that id!');
       return;
-    } 
+    }
     else {
       // exists, delete
       await draft.destroy();
@@ -109,6 +122,6 @@ export async function deleteDraft (req: Request, res: Response, next: NextFuncti
     }
   } catch (error) {
     res.status(400);
-    res.json(`Error deleting draft ${error}`);  
+    res.json(`Error deleting draft ${error}`);
   }
 }
