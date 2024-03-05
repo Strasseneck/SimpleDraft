@@ -2,8 +2,6 @@ import { createDiffs, createPatches } from "./DiffMatchPatchUtils";
 import { addChange } from "../apiService/ChangeApi";
 import Change from '../types/ChangeType';
 
-
-
 export const saveChange = async (description: string, original: string, changed: string, draftId: number) => {
     try {
         // compute diffs
@@ -17,7 +15,6 @@ export const saveChange = async (description: string, original: string, changed:
             Patches: patches
         };
         await addChange(newChange);
-        // await updateDraft(draftId, { content: changed })
         return true;
     } catch (error) {
         console.error(`Error saving change ${error}`)

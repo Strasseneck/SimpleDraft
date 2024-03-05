@@ -10,6 +10,6 @@ export const addChange = async (changeData: ChangeType) => {
   return await apiClient<ChangeResponse>('change', 'POST', changeData);
 };
 
-export const deleteChange = async (id: number) => {
-  return await apiClient<void>(`change/${id}`, 'DELETE');
+export const deleteChanges = async (deleteIds: number[]) => {
+  return await apiClient<void>(`change/`, 'DELETE', deleteIds);
 };

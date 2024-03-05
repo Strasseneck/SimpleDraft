@@ -1,7 +1,10 @@
 import { DiffMatchPatch, DiffOperation, Diff, PatchObject, PatchApplyArray } from "diff-match-patch-typescript";
 import DOMPurify from "dompurify";
 import { ChangeResponse, DraftResponse } from "../apiService/responseTypes";
+import { deleteChanges, getDraft} from "../apiService";
 
+
+// initialize DiffMatchPatch 
 const dmp = new DiffMatchPatch;
 
 // function to create diffs from two texts
@@ -17,17 +20,16 @@ export const createPatches = (changedDraft: string, diffs: Diff[]) => {
     return patches;
 }
 
-// export const createPatchObject = ()
-
 // function to create current state of the draft from diffs and patches
 export const createDraft = (draft: DraftResponse) => {
     let latestDraft = draft.content;
-    draft.Changes.forEach((change) => {
+    const sortedChanges = draft.Changes.sort((a, b) => a.id - b.id)
+    sortedChanges.forEach((change) => {
         // transform the patches into correct format
         const patches = transformPatchesArray(change.Patches);
         // update the draft by applying the patch
         latestDraft = dmp.patch_apply(patches, latestDraft)[0]
-        console.log(latestDraft)
+        console.log(latestDraft);
     })
     return latestDraft;
 }
@@ -68,6 +70,17 @@ export const createDiffsHTML = (diffs: Diff[]) => {
     return sanitizedHtmlDiffs;
 };
 
+// function to revert drraf to a previous state
+export const revertDraft = async (draft: DraftResponse, revertToChange: ChangeResponse, draftId: number) => {
+    // loop through changes and delete changes with id greater than the point the user wants to revere to
+    const idsTodelete = draft.Changes.filter(change => change.id > revertToChange.id).map(change => change.id);
+    await deleteChanges(idsTodelete);
+    // fetch reverted draft
+    const revertedDraftRes = await getDraft(draftId);
+    const revertedDraft = createDraft(revertedDraftRes)
+    return revertedDraft; 
+}
+
 // function to revert a draft to a previous state using reversed Diffs
 export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange: ChangeResponse) => {
     const currentContent = draft.content;
@@ -93,7 +106,6 @@ export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange
     const trues = patchApplyResult[1].filter((el) => el === true);
     console.log(`Reversed diffs ${trues.length}`);   
 }
-
 
 // function to revert draft to a previous state using reversed Patches
 export const revertDraftUsingReversedPatches = (draft: DraftResponse, revertToChange: ChangeResponse) => {

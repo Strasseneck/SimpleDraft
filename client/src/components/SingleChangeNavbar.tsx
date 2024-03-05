@@ -7,7 +7,7 @@ import { getChange } from '../apiService/ChangeApi'
 // types
 import { ChangeResponse } from '../apiService/responseTypes';
 // utils
-import { revertDraftUsingReverseDiff, revertDraftUsingReversedPatches } from '../utils/DiffMatchPatchUtils';
+import { createDraft, revertDraft } from '../utils/DiffMatchPatchUtils';
 import { saveChange } from '../utils/SaveChangeUtil';
 //  styling
 import './EditorNavbar.css';
@@ -40,10 +40,12 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
   const onRevertClick = async () => {
     const draft = await getDraft(draftId);
     const endChange = await getChange(changeId)
-    const revertedContent = revertDraftUsingReverseDiff(draft, endChange);
+    const originalDraft = createDraft(draft);
+    // revert the content
+    const revertedDraft = await revertDraft(draft, endChange, draftId);
     const formattedCreatedAt = moment(change.createdAt).format('MMMM Do YYYY, h:mm a');
     const description = `Reverted to state of script from ${formattedCreatedAt}`;
-    const save = await saveChange(description, draft.content,revertedContent, draftId )
+    const save = await saveChange(description, originalDraft, revertedDraft, draftId )
     if (save) {
       onEditorClick();
     }
