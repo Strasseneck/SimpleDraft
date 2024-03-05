@@ -55,13 +55,13 @@ const DashboardView: FC = () => {
   }
 
   const handleDeleteDraft = (deleteId: number) => {
-    setAllDrafts(allDrafts.filter((draft) => draft.id !== deleteId))
+    setAllDrafts(prev => prev.filter((draft) => draft.id !== deleteId))
   }
 
   return (
     <div className='DashboardView'>
       < DashNavbar onShowModal={showNew} />
-      {isReady && allDrafts && <AllDraftsGrid drafts={allDrafts} handleDeleteDraft={handleDeleteDraft} />
+      {isReady && <AllDraftsGrid drafts={allDrafts} handleDeleteDraft={handleDeleteDraft} />
       }
       <NewDraftModal visible={newVisible} onClose={hideNew} handleNewDraftClick={handleNewDraftClick} />
     </div>

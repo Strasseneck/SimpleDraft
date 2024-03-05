@@ -33,6 +33,7 @@ export async function getChange(req: Request, res: Response, next: NextFunction)
 
 export async function addChange(req: Request, res: Response, next: NextFunction) {
   const patches = req.body.Patches;
+  const diffs = req.body.Diffs;
   try {
     // Create a new change instance
     const newChange = await Change.create(req.body);
@@ -47,7 +48,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
       });
 
       // Create and associate the diffs with the current patch
-      await Promise.all(patch.diffs.map(async (diff: any) => {
+      await Promise.all(diffs.map(async (diff: any) => {
         return await Diff.create({
           operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
           text: diff[1],

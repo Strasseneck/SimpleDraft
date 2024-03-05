@@ -65,10 +65,10 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    console.log(newDraft);
+    console.log(`workingDraft: ${workingDraft}`);
     const save = await saveChange(description, oldDraft, newDraft, id)
     if (save) {
-      setDraft(newDraft);
+      setDraft(workingDraft);
       hide();
     }
   };

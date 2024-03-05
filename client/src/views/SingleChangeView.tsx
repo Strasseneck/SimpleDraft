@@ -27,22 +27,23 @@ const SingleChangeView: React.FC = () => {
     const { id, draftTitle, draftId } = location.state as LocationState;
 
     useEffect(() => {
-        if (id !== undefined && id !== null) {
+        if (id !== undefined && id !== null && !isReady) {
             async function retrieveChange() {
                 try {
-                    // get change from api
-                    const currentChange = await getChange(id);
-                    const changeDiffs = currentChange.Patches.map((patch) => patch.diffs)
-                    setDiffs(changeDiffs[0]);
-                    setChange(currentChange);
-                    setIsReady(true);
+                     // get change from api
+                     const currentChange = await getChange(id);
+                     const currentDiffs  = currentChange.Diffs;
+                     console.log(`CURRENT ${JSON.stringify(currentDiffs)}`)
+                     setDiffs(currentDiffs);
+                     setChange(currentChange);
+                     setIsReady(true);
                 } catch (error) {
                     console.error(`Error retrieving change with id ${id}`)
                 }
             }
             retrieveChange()
         }
-    }, [id]);
+    }, []);
 
     const diffsDisplay = createDiffsHTML(diffs);
 

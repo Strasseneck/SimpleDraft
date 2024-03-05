@@ -1,4 +1,4 @@
-import { PatchObject } from "diff-match-patch-typescript"
+import { PatchObject, Diff } from "diff-match-patch-typescript"
 
 export interface ChangeResponse {
     id: number,
@@ -7,6 +7,7 @@ export interface ChangeResponse {
     updatedAt: Date,
     DraftId: number,
     Patches: PatchObject[]
+    Diffs: Diff[]
 }
 
 export interface DraftResponse {

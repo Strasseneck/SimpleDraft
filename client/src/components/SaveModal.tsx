@@ -18,6 +18,7 @@ interface SaveModalProps {
   const handleClick = () => {
     if (description.trim() !== '' && description.length <= 50) {
       handleSaveChange(description); 
+      setDescription('');
     }
     else if (description.trim() === '') {
       setDescription('Please describe your change!')

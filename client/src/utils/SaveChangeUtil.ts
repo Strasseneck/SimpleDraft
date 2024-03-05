@@ -6,15 +6,18 @@ export const saveChange = async (description: string, original: string, changed:
     try {
         // compute diffs
         const diffs = createDiffs(original, changed);
+        console.log(`DIFFS: ${JSON.stringify(diffs)}`)
         // create patches
         const patches = createPatches(changed, diffs)
         // create change for db
         const newChange: Change = {
             description: description,
             DraftId: draftId,
-            Patches: patches
+            Patches: patches,
+            Diffs: diffs,
         };
-        await addChange(newChange);
+        const savedChange = await addChange(newChange);
+        console.log(savedChange)
         return true;
     } catch (error) {
         console.error(`Error saving change ${error}`)

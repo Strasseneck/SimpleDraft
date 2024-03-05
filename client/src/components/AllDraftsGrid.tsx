@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC} from 'react';
 // types
 import { DraftResponse } from '../apiService/responseTypes';
 // components
@@ -24,3 +24,5 @@ const AllDraftsGrid: FC<Props> = ({ drafts, handleDeleteDraft}) => {
 };
 
 export default AllDraftsGrid;
+
+
