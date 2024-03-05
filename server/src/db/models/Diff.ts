@@ -5,7 +5,7 @@ import { DiffOperation } from "diff-match-patch-typescript";
   interface DiffAttributes {
     id?: number;
     operation: keyof typeof DiffOperation;
-    text: string;
+    diffText: string;
     createdAt?: Date;
     updatedAt?: Date;
     PatchId: number;
@@ -14,7 +14,7 @@ import { DiffOperation } from "diff-match-patch-typescript";
   class Diff extends Model<DiffAttributes> implements DiffAttributes {
     public id!: number; // using `!` to avoid TypeScript's strict null checking errors
     public operation!: keyof typeof DiffOperation;
-    public text!: string;
+    public diffText!: string;
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
     public PatchId!: number;
@@ -33,7 +33,7 @@ Diff.init(
       values: ['DIFF_DELETE', 'DIFF_INSERT', 'DIFF_EQUAL'],
       allowNull: false
     },
-    text: {
+    diffText: {
       type: DataTypes.TEXT,
       allowNull: false
     },

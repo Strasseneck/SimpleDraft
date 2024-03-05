@@ -48,7 +48,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
       const createdDiffs = await Promise.all(patch.diffs.map(async (diff: any) => {
         return await Diff.create({
           operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
-          text: diff[1],
+          diffText: diff[1],
           PatchId: newPatch.id,
         });
       }));
@@ -58,7 +58,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
 
     // Include the associated patches and diffs when fetching the newly created change
     const changeWithDiffsAndPatches = await Change.findByPk(newChange.id, {
-      include: [{ model: Patch, include: [Diff] }],
+      include: [{ model: Patch, include: [{ model: Diff, as: 'diffs' }] }],
     });
 
     // Return the change with associated patches and diffs

@@ -71,7 +71,7 @@ Patch.init(
     }
   );
 
-  Patch.hasMany(Diff, {constraints: true, onDelete: 'CASCADE'});
+  Patch.hasMany(Diff, {as: 'diffs', constraints: true, onDelete: 'CASCADE'});
   Diff.belongsTo(Patch);
   
   export default Patch;

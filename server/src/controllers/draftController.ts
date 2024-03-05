@@ -13,7 +13,7 @@ export async function getAllDrafts(req: Request, res: Response, next: NextFuncti
           include: [
             {
               model: Patch,
-              include: [Diff] // Include associated Diffs within each Patch
+              include: [{ model: Diff, as: 'diffs' }] // Include associated Diffs within each Patch
             }
           ]
         }
@@ -37,7 +37,7 @@ export async function getDraft(req: Request, res: Response, next: NextFunction) 
           include: [
             {
               model: Patch,
-              include: [Diff] // Include associated Diffs within each Patch
+              include: [{ model: Diff, as: 'diffs' }] // Include associated Diffs within each Patch
             }
           ]
         }
@@ -55,7 +55,7 @@ export async function getDraft(req: Request, res: Response, next: NextFunction) 
     }
   } catch (error) {
     res.status(400);
-    res.json(`Error retrieving draft ${error}`);
+    res.json(`Error retieving draft ${error}`);
   }
 }
 
