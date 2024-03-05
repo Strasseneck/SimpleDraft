@@ -13,7 +13,7 @@ interface Props {
   onDelete: (draftId: number) => void;
 }
 
-const DraftCard: FC<Props> = ({ draft }) => {
+const DraftCard: FC<Props> = ({ draft, onDelete }) => {
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const { id, title, createdAt, updatedAt, Changes } = draft;
   const navigate = useNavigate();
@@ -36,6 +36,7 @@ const DraftCard: FC<Props> = ({ draft }) => {
       // delete draft
       console.log(id)
       await deleteDraft(id);
+      onDelete(id);
       setShowDelete(false)
     } else {
       setShowDelete(false);
