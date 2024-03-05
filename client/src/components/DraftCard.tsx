@@ -34,7 +34,6 @@ const DraftCard: FC<Props> = ({ draft, onDelete }) => {
   const handleDelete = async (confirm: boolean) => {
     if (confirm) {
       // delete draft
-      console.log(id)
       await deleteDraft(id);
       onDelete(id);
       setShowDelete(false)
@@ -45,33 +44,39 @@ const DraftCard: FC<Props> = ({ draft, onDelete }) => {
 
   return (
     <div className='DraftCard'>
-      {showDelete ? (
-        <div>
-          <h3 className='heading'> Delete Draft</h3>
-          <p>Are you sure you want to delete "{title}" ?</p>
-          <div className='ButtonContainer'>
-            <button className='DeleteButton' onClick={() => handleDelete(true)}>Yes</button>
-            <button className='DeleteButton' onClick={() => handleDelete(false)}>No</button>
-          </div>
-        </div>
-      ) : (
-        <>
-          <button className='CloseButton' onClick={handleCloseClick}>X</button>
-          <a className="link" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
-            <h3 className='heading'>Title: {draft.title}</h3>
-          </a>
-          <p className='heading'>Created:</p>
-          <p>{formattedCreatedAt}</p>
-          <p className='heading'>Total Changes:</p>
-          <p>{changeCount}</p>
-          <p className='heading'>Last Changed:</p>
-          <p> {formattedUpdatedAt} </p>
-          <p className='heading'>Latest Change:</p>
-          <p>{lastChange}</p>
-        </>
-      )}
+        {!showDelete && (
+            <div className='HoverCard'>
+                <button onClick={handleTitleClick}>Edit</button>
+                <button onClick={handleCloseClick}>Delete</button>
+            </div>
+        )}
+        {showDelete ? (
+            <div>
+                <h3 className='heading'> Delete Draft</h3>
+                <p>Are you sure you want to delete "{title}" ?</p>
+                <div className='ButtonContainer'>
+                    <button className='DeleteButton' onClick={() => handleDelete(true)}>Yes</button>
+                    <button className='DeleteButton' onClick={() => handleDelete(false)}>No</button>
+                </div>
+            </div>
+        ) : (
+            <>
+                <a className="link" onClick={handleTitleClick} style={{ cursor: 'pointer' }}>
+                    <h3 className='heading'>Title: {draft.title}</h3>
+                </a>
+                <p className='heading'>Created:</p>
+                <p>{formattedCreatedAt}</p>
+                <p className='heading'>Total Changes:</p>
+                <p>{changeCount}</p>
+                <p className='heading'>Last Changed:</p>
+                <p> {formattedUpdatedAt} </p>
+                <p className='heading'>Latest Change:</p>
+                <p>{lastChange}</p>
+            </>
+        )}
     </div>
-  );
+);
+
 
 };
 

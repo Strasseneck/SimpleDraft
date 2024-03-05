@@ -20,3 +20,9 @@
 .DashNavbar button:hover {
     background-color: var(--button-hover);
 }
+.Logo {
+    display: flex;
+    align-self: flex-end;
+    font-family: Garamond;
+    margin-left: 550px;;
+}

@@ -1,6 +1,5 @@
 .DashboardView {
     min-height: 100vh;
     height: fit-content;
-    background-image: url('../assets/corkboard2.jpg');
-    background-size: contain;
+    background-color: var(--light-bg);
 }

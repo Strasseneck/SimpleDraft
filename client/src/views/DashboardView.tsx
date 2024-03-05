@@ -46,7 +46,6 @@ const DashboardView: FC = () => {
       // try to create a new draft
       const newDraft = await addDraft(title);
       const id = newDraft.id;
-      console.log(`newdraft: ${newDraft}`)
       // open editor with new draft
       navigate('/editor', { state: { id } })
     } catch (error) {

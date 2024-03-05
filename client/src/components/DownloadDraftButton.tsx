@@ -15,7 +15,7 @@ const DownloadDraftButton: React.FC<DownloadDraftProps> = ({ draft, title }) => 
   };
 
   return (
-    <button onClick={handleDownload}>
+    <button onClick={handleDownload} >
       Download
     </button>
   );

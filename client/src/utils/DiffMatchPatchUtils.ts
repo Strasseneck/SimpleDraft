@@ -1,4 +1,4 @@
-import { DiffMatchPatch, DiffOperation, Diff, PatchObject, PatchApplyArray } from "diff-match-patch-typescript";
+import { DiffMatchPatch, DiffOperation, Diff, PatchObject } from "diff-match-patch-typescript";
 import DOMPurify from "dompurify";
 import { ChangeResponse, DraftResponse } from "../apiService/responseTypes";
 import { deleteChanges, getDraft } from "../apiService";
@@ -7,10 +7,11 @@ import { deleteChanges, getDraft } from "../apiService";
 // initialize DiffMatchPatch 
 const dmp = new DiffMatchPatch;
 
+
 // function to create diffs from two texts
 export const createDiffs = (oldDraft: string, newDraft: string) => {
     const diffs = dmp.diff_main(oldDraft, newDraft);
-    dmp.diff_cleanupSemantic(diffs)
+    dmp.diff_cleanupSemantic(diffs);
     return diffs;
 };
 
@@ -29,10 +30,9 @@ export const createDraft = (draft: DraftResponse) => {
         const patches = transformPatchesArray(change.Patches);
         // Update the draft by applying the patch
         const result = dmp.patch_apply(patches, latestDraft);
-        console.log(result);
+        console.log(result[1])
         latestDraft = result[0]; // Update the latest draft content
     });
-    console.log(latestDraft);
     return latestDraft; // Return the final state of the draft
 };
 
@@ -72,7 +72,7 @@ export const createDiffsHTML = (diffs: Diff[]) => {
     return sanitizedHtmlDiffs;
 };
 
-// function to revert drraf to a previous state
+// function to revert draftto a previous state
 export const revertDraft = async (draft: DraftResponse, revertToChange: ChangeResponse, draftId: number) => {
     // loop through changes and delete changes with id greater than the point the user wants to revere to
     const idsTodelete = draft.Changes.filter(change => change.id > revertToChange.id).map(change => change.id);
@@ -82,72 +82,3 @@ export const revertDraft = async (draft: DraftResponse, revertToChange: ChangeRe
     const revertedDraft = createDraft(revertedDraftRes)
     return revertedDraft;
 }
-
-// function to revert a draft to a previous state using reversed Diffs
-export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange: ChangeResponse) => {
-    const currentContent = draft.content;
-
-    // all changes prior to the revert to point
-    const revertChanges: ChangeResponse[] = draft.Changes.filter((change) => change.id >= revertToChange.id);
-
-    const revertDiffs: Diff[] = revertChanges.flatMap(change =>
-        change.Diffs.map(diffObject => extractDiffFromObject(diffObject))
-    );
-
-    const reversedDiffs: Diff[] = revertDiffs.map(([op, val]) => [
-        // Reverse the operation
-        op * -1,
-        val
-    ]);
-
-    const patches: PatchObject[] = dmp.patch_make(currentContent, reversedDiffs);
-
-    const patchApplyResult: PatchApplyArray = dmp.patch_apply(patches, currentContent);
-    return patchApplyResult[0];
-
-    const trues = patchApplyResult[1].filter((el) => el === true);
-    console.log(`Reversed diffs ${trues.length}`);
-}
-
-// function to revert draft to a previous state using reversed Patches
-export const revertDraftUsingReversedPatches = (draft: DraftResponse, revertToChange: ChangeResponse) => {
-    const currentContent = draft.content;
-
-    // all changes prior to the revert to point
-    const revertChanges: ChangeResponse[] = draft.Changes.filter((change) => change.id >= revertToChange.id);
-
-    const revertDiffs: Diff[] = revertChanges.flatMap(change =>
-        change.Diffs.map(diffObject => extractDiffFromObject(diffObject))
-    );
-
-    // create patches
-    const patches: PatchObject[] = dmp.patch_make(currentContent, revertDiffs);
-
-    // reverse patches
-    const reversedPatches: PatchObject[] = patches.map((patch) => reversePatch(patch));
-
-    // apply patches
-    const patchApplyResult: PatchApplyArray = dmp.patch_apply(reversedPatches, currentContent);
-
-    return patchApplyResult[0];
-
-    // return modified draft
-    const trues = patchApplyResult[1].filter((el) => el === true);
-    console.log(`Reversed patches ${trues.length}`);
-}
-
-const reversePatch = (patch: PatchObject): PatchObject => {
-    return {
-        diffs: patch.diffs.map(([op, val]) => [
-            op * -1, // Reverse the operation
-            val
-        ]),
-        start1: patch.start2,
-        start2: patch.start1,
-        length1: patch.length2,
-        length2: patch.length1
-    };
-};
-
-
-

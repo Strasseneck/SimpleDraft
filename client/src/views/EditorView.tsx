@@ -34,14 +34,12 @@ const EditorView: React.FC = () => {
         try {
           // get draft from api
           const usersDraft = await getDraft(id);
-          // create the current state of the draft from patches
-          const currentState = createDraft(usersDraft);
           // get title
           setDraftTitle(usersDraft.title)
           // set draft state to retrieved draft
-          setDraft(currentState);
+          setDraft(usersDraft.content);
           // set working draft initially to draft
-          setWorkingDraft(currentState);
+          setWorkingDraft(usersDraft.content);
           setIsReady(true);
         } catch (error) {
           console.error(`Error retrieving draft with id: ${id}`, error);
@@ -65,7 +63,6 @@ const EditorView: React.FC = () => {
     // compute diff
     const oldDraft = draft;
     const newDraft = workingDraft;
-    console.log(`workingDraft: ${workingDraft}`);
     const save = await saveChange(description, oldDraft, newDraft, id)
     if (save) {
       setDraft(workingDraft);
