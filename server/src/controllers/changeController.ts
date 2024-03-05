@@ -35,9 +35,8 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
   try {
     // Create a new change instance
     const newChange = await Change.create(req.body);
-
     // Create the patches and associate them with the new change
-    const createdPatches = await Promise.all(patches.map(async (patch: any) => {
+    await Promise.all(patches.map(async (patch: any) => {
       const newPatch = await Patch.create({
         start1: patch.start1,
         start2: patch.start2,
@@ -47,7 +46,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
       });
 
       // Create and associate the diffs with the current patch
-      const createdDiffs = await Promise.all(patch.diffs.map(async (diff: any) => {
+      await Promise.all(patch.diffs.map(async (diff: any) => {
         return await Diff.create({
           operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
           text: diff[1],
@@ -70,27 +69,19 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
   }
 }
 
-
-
-  
-export async function deleteChange (req: Request, res: Response, next: NextFunction ) {
-  const changeId = req.params.id;
+export async function deleteChanges(req: Request, res: Response, next: NextFunction) {
+  const idsToDelete = req.body;
   try {
-    // try to retrieve
-    const change = await Change.findByPk(changeId)
-    if (!change) {
-      // doesn't exist, return error msg
-      res.status(400);
-      res.json('No change with that id!');
-    }
-    else {
-      // exists, delete
-      await change.destroy();
-      res.status(200)
-      res.json(`Change with id ${changeId} deleted sucessfully`);
-    }
+    // loop through and delete each change
+    await Promise.all(idsToDelete.map(async (id: number) => {
+      const change = await Change.findByPk(id);
+      if (change) {
+        await change.destroy();
+      }
+    }));
+    // return success and the ids deleted
+    res.status(200).json(`Changes with the ids: ${idsToDelete} deleted successfully`);
   } catch (error) {
-    res.status(400);
-    res.json(`Error deleting change ${error}`)
+    res.status(400).json(`Error deleting change ${error}`);
   }
 }

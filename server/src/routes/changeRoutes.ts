@@ -1,5 +1,5 @@
 import express from 'express'
-import { getChange, addChange, deleteChange }from '../controllers/changeController'
+import { getChange, addChange, deleteChanges }from '../controllers/changeController'
 
 const router = express.Router()
 
@@ -10,7 +10,6 @@ router.get('/:id', getChange)
 router.post('/', addChange)
 
 // delete route
-router.delete('/:id', deleteChange)
-
+router.delete('/', deleteChanges)
 
 export default router
