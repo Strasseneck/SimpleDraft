@@ -11,6 +11,12 @@ export const createDiffs = (oldDraft: string, newDraft: string) => {
     return diffs;
 };
 
+// function to create patches from diffs and text
+export const createPatches = (changedDraft: string, diffs: Diff[]) => {
+    const patches: PatchObject[] = dmp.patch_make(changedDraft, diffs);
+    return patches;
+}
+
 // function to destructure objects into Diff tuples, because of weird mismatch in my types
 function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
     const { operation, text } = diffObject;
@@ -25,7 +31,7 @@ export const createDiffsHTML = (diffs: Diff[]) => {
     return sanitizedHtmlDiffs;
 };
 
-// function to revert a draft to a previous state
+// function to revert a draft to a previous state using reversed Diffs
 export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange: ChangeResponse) => {
     const currentContent = draft.content;
 
@@ -52,6 +58,7 @@ export const revertDraftUsingReverseDiff = (draft: DraftResponse, revertToChange
 }
 
 
+// function to revert draft to a previous state using reversed Patches
 export const revertDraftUsingReversedPatches = (draft: DraftResponse, revertToChange: ChangeResponse) => {
     const currentContent = draft.content;
 

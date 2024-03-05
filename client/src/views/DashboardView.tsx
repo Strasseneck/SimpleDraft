@@ -30,7 +30,7 @@ const DashboardView: FC = () => {
       }
     }
     retrieveAllDrafts()
-  }, [allDrafts])
+  }, [])
 
   const showNew = () => {
     setNewVisible(true);
