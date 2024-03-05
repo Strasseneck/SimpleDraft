@@ -65,7 +65,7 @@ const DraftCard: FC<Props> = ({ draft }) => {
           <p>{changeCount}</p>
           <p className='heading'>Last Changed:</p>
           <p> {formattedUpdatedAt} </p>
-          <p className='heading'>Lastest Change:</p>
+          <p className='heading'>Latest Change:</p>
           <p>{lastChange}</p>
         </>
       )}

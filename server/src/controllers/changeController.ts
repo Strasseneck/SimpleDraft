@@ -48,7 +48,7 @@ export async function addChange(req: Request, res: Response, next: NextFunction)
       const createdDiffs = await Promise.all(patch.diffs.map(async (diff: any) => {
         return await Diff.create({
           operation: DiffOperation[diff[0]] as "DIFF_DELETE" | "DIFF_INSERT" | "DIFF_EQUAL",
-          diffText: diff[1],
+          text: diff[1],
           PatchId: newPatch.id,
         });
       }));

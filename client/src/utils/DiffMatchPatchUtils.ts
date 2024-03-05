@@ -17,6 +17,43 @@ export const createPatches = (changedDraft: string, diffs: Diff[]) => {
     return patches;
 }
 
+// export const createPatchObject = ()
+
+// function to create current state of the draft from diffs and patches
+export const createDraft = (draft: DraftResponse) => {
+    let latestDraft = draft.content;
+    draft.Changes.forEach((change) => {
+        // transform the patches into correct format
+        const patches = transformPatchesArray(change.Patches);
+        // update the draft by applying the patch
+        latestDraft = dmp.patch_apply(patches, latestDraft)[0]
+        console.log(latestDraft)
+    })
+    return latestDraft;
+}
+
+// Function to transform the diffs array from your input into Diff tuples
+function transformDiffs(diffs: any[]): Diff[] {
+    return diffs.map(diff => extractDiffFromObject(diff));
+}
+
+// Function to transform the entire patch object into a PatchObject instance
+function transformPatch(patchData: any): PatchObject {
+    const { start1, start2, length1, length2, diffs } = patchData;
+    const patchObject = new PatchObject();
+    patchObject.start1 = start1;
+    patchObject.start2 = start2;
+    patchObject.length1 = length1;
+    patchObject.length2 = length2;
+    patchObject.diffs = transformDiffs(diffs);
+    return patchObject;
+}
+
+// Function to transform the entire array of patches
+function transformPatchesArray(patchesData: any[]): PatchObject[] {
+    return patchesData.map(patchData => transformPatch(patchData));
+}
+
 // function to destructure objects into Diff tuples, because of weird mismatch in my types
 function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
     const { operation, text } = diffObject;

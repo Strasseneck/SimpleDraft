@@ -12,6 +12,7 @@ import SaveModal from '../components/SaveModal';
 import { getDraft } from '../apiService/DraftApi';
 // styling
 import './Editorview.css';
+import { createDraft } from '../utils/DiffMatchPatchUtils';
 
 interface LocationState {
   id: number,
@@ -34,12 +35,14 @@ const EditorView: React.FC = () => {
         try {
           // get draft from api
           const usersDraft = await getDraft(id);
+          // create the current state of the draft from patches
+          const currentState = createDraft(usersDraft);
           // get title
           setDraftTitle(usersDraft.title)
           // set draft state to retrieved draft
-          setDraft(usersDraft.content);
+          setDraft(currentState);
           // set working draft initially to draft
-          setWorkingDraft(usersDraft.content);
+          setWorkingDraft(currentState);
           setIsReady(true);
         } catch (error) {
           console.error(`Error retrieving draft with id: ${id}`, error);
