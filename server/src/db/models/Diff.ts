@@ -3,7 +3,7 @@ import { DataTypes, Model } from "sequelize"
 import { DiffOperation } from "diff-match-patch-typescript";
 
   interface DiffAttributes {
-    id?: number;
+    id: number;
     operation: keyof typeof DiffOperation;
     text: string;
     createdAt?: Date;
