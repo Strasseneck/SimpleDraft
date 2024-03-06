@@ -2,6 +2,8 @@ import { sequelize } from "../index";
 import { DataTypes, Model } from "sequelize";
 import Diff from "./Diff";
 
+// CURRENTLY UNUSED PATCH TO BE USED IN BRANCHING MERGING, HAS PREVIOUSLY BEEN IMPLEMENTED IN CONTROLLERS AND APIS CHECK GIT HISTORY
+
 
 interface PatchAttributes {
     id?: number;

@@ -18,7 +18,6 @@ const ChangeHistoryNavbar: FC<Props> = ({ draftId }) => {
   };
 
   const onEditorClick = () => {
-    console.log(draftId)
     const id = draftId;
     navigate('/editor', { state: { id } })
   }

@@ -11,7 +11,6 @@ import SaveModal from '../components/SaveModal';
 import { getDraft } from '../apiService/DraftApi';
 // styling
 import './Editorview.css';
-import { createDraft } from '../utils/DiffMatchPatchUtils';
 
 interface LocationState {
   id: number,

@@ -47,7 +47,7 @@ export const createDiffsHTML = (diffs: Diff[]) => {
     return sanitizedHtmlDiffs;
 };
 
-// patch functions, to be used for merging
+// CURRENTLY UNUSED PATCH FUNCTIONS THAT COULD BE USED FOR MERGING IN A BRANCHING FUCNTION
 
 // function to create patches from diffs and text
 export const createPatches = (changedDraft: string, diffs: Diff[]) => {

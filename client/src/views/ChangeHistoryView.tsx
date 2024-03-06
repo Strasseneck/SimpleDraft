@@ -16,7 +16,7 @@ interface LocationState {
 }
 
 const ChangeHistoryView: FC = () => {
-  const [draft, setDraft] = useState<DraftResponse>({})
+  const [draft, setDraft] = useState<DraftResponse | null>(null)
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
   const location = useLocation();
   const { id } = location.state as LocationState;
