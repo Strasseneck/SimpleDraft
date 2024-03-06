@@ -1,25 +1,17 @@
 import { DiffMatchPatch, DiffOperation, Diff, PatchObject } from "diff-match-patch-typescript";
 import DOMPurify from "dompurify";
-import { ChangeResponse, DraftResponse } from "../apiService/responseTypes";
-import { deleteChanges, getDraft } from "../apiService";
+import { DraftResponse } from "../apiService/responseTypes";
 
 
 // initialize DiffMatchPatch 
 const dmp = new DiffMatchPatch;
 
-
 // function to create diffs from two texts
 export const createDiffs = (oldDraft: string, newDraft: string) => {
     const diffs = dmp.diff_main(oldDraft, newDraft);
-    dmp.diff_cleanupSemantic(diffs);
+    dmp.diff_cleanupSemantic(diffs)
     return diffs;
 };
-
-// function to create patches from diffs and text
-export const createPatches = (changedDraft: string, diffs: Diff[]) => {
-    const patches: PatchObject[] = dmp.patch_make(changedDraft, diffs);
-    return patches;
-}
 
 // function to create current state of the draft from diffs and patches
 export const createDraft = (draft: DraftResponse) => {
@@ -41,6 +33,28 @@ function transformDiffs(diffs: any[]): Diff[] {
     return diffs.map(diff => extractDiffFromObject(diff));
 }
 
+// function to destructure objects into Diff tuples, because of weird mismatch in my types
+function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
+    const { operation, text } = diffObject;
+    return [DiffOperation[operation], text];
+};
+
+// function to create html representation of diffs for rendering
+export const createDiffsHTML = (diffs: Diff[]) => {
+    const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
+    const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
+    const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
+    return sanitizedHtmlDiffs;
+};
+
+// patch functions, to be used for merging
+
+// function to create patches from diffs and text
+export const createPatches = (changedDraft: string, diffs: Diff[]) => {
+    const patches: PatchObject[] = dmp.patch_make(changedDraft, diffs);
+    return patches;
+}
+
 // Function to transform the entire patch object into a PatchObject instance
 function transformPatch(patchData: any): PatchObject {
     const { start1, start2, length1, length2, diffs } = patchData;
@@ -56,29 +70,4 @@ function transformPatch(patchData: any): PatchObject {
 // Function to transform the entire array of patches
 function transformPatchesArray(patchesData: any[]): PatchObject[] {
     return patchesData.map(patchData => transformPatch(patchData));
-}
-
-// function to destructure objects into Diff tuples, because of weird mismatch in my types
-function extractDiffFromObject(diffObject: { operation: keyof typeof DiffOperation; text: string }): Diff {
-    const { operation, text } = diffObject;
-    return [DiffOperation[operation], text];
-};
-
-// function to create html representation of diffs for rendering
-export const createDiffsHTML = (diffs: Diff[]) => {
-    const diffsConverted: Diff[] = diffs.map(({ operation, text }) => extractDiffFromObject({ operation, text }));
-    const displayDiffs = dmp.diff_prettyHtml(diffsConverted);
-    const sanitizedHtmlDiffs = DOMPurify.sanitize(displayDiffs);
-    return sanitizedHtmlDiffs;
-};
-
-// function to revert draftto a previous state
-export const revertDraft = async (draft: DraftResponse, revertToChange: ChangeResponse, draftId: number) => {
-    // loop through changes and delete changes with id greater than the point the user wants to revere to
-    const idsTodelete = draft.Changes.filter(change => change.id > revertToChange.id).map(change => change.id);
-    await deleteChanges(idsTodelete);
-    // fetch reverted draft
-    const revertedDraftRes = await getDraft(draftId);
-    const revertedDraft = createDraft(revertedDraftRes)
-    return revertedDraft;
 }

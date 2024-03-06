@@ -1,4 +1,4 @@
-import { createDiffs, createPatches } from "./DiffMatchPatchUtils";
+import { createDiffs } from "./DiffMatchPatchUtils";
 import { addChange } from "../apiService/ChangeApi";
 import { updateDraft } from "../apiService/DraftApi";
 import Change from '../types/ChangeType';
@@ -7,13 +7,10 @@ export const saveChange = async (description: string, original: string, changed:
     try {
         // compute diffs
         const diffs = createDiffs(original, changed);
-        // create patches
-        const patches = createPatches(changed, diffs)
         // create change for db
         const newChange: Change = {
             description: description,
             DraftId: draftId,
-            Patches: patches,
             Diffs: diffs,
         };
         const addedChange = await addChange(newChange);

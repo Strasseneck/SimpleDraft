@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express'
 import Draft from '../db/models/Draft'
 import Change from '../db/models/Change';
 import Diff from '../db/models/Diff';
-import Patch from '../db/models/Patch';
 import Version from '../db/models/Version';
 
 export async function getAllDrafts(req: Request, res: Response, next: NextFunction) {
@@ -12,17 +11,11 @@ export async function getAllDrafts(req: Request, res: Response, next: NextFuncti
         {
           model: Change,
           include: [
-            {
-              model: Patch,
-              include: [{ model: Diff, as: 'diffs' }]
-            },
-            Diff,// Include associated Diffs directly under the Change model
+            Diff // Include associated Diffs directly under the Change model
           ],
-        },
-        Version
+        }
       ]
     });
-
     res.status(200).json(drafts);
   } catch (error) {
     res.status(500).json(`Error retrieving drafts: ${error}`);
@@ -38,11 +31,7 @@ export async function getDraft(req: Request, res: Response, next: NextFunction) 
         {
           model: Change,
           include: [
-            {
-              model: Patch,
-              include: [{ model: Diff, as: 'diffs' }]
-            },
-            Diff,// Include associated Diffs directly under the Change model
+            Diff // Include associated Diffs directly under the Change model
           ]
         },
         Version // include the associated Versions
@@ -51,19 +40,17 @@ export async function getDraft(req: Request, res: Response, next: NextFunction) 
     })
     if (!draft) {
       // doesn't exist, return error msg
-      res.status(400);
-      res.json('No draft with that id!');
+      res.status(400).json('No draft with that id!');
     }
     else {
       // exists return draft
-      res.status(200);
-      res.json(draft);
+      res.status(200).json(draft);
     }
   } catch (error) {
-    res.status(400);
-    res.json(`Error retieving draft ${error}`);
+    res.status(400).json(`Error retrieving draft ${error}`);
   }
 }
+
 
 export async function addDraft(req: Request, res: Response, next: NextFunction) {
   try {

@@ -18,7 +18,6 @@ class Change extends Model<ChangeAttributes> implements ChangeAttributes {
     public updatedAt!: Date; // Sequelize automatically adds it
     public DraftId!: number;
 
-    public readonly patches?: Patch[]; // for patches that can apply the change
     public readonly diffs?: Diff[]; // for diffs that make up the change
 }
 
@@ -49,9 +48,6 @@ Change.init({
     sequelize,
     modelName: 'Change',
 });
-
-Change.hasMany(Patch, { constraints: true, onDelete: 'CASCADE'});
-Patch.belongsTo(Change);
 
 Change.hasMany(Diff, { constraints: true, onDelete: 'CASCADE'});
 Diff.belongsTo(Change);

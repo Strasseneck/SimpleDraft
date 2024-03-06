@@ -24,10 +24,6 @@
     text-decoration: underline;
 }
 
-.link:hover {
-   color: darkblue;
-}
-
 .DeleteButton {
     height: 30px;
     width: 65px;

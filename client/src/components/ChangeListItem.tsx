@@ -17,8 +17,7 @@ const ChangeListItem: React.FC<ChangeListItemProps> = ({ draft, change }) => {
     const handleDescriptionClick = () => {
         const title = draft.title;
         const draftId = draft.id;
-        const version = draft.Versions.filter((version) => version.ChangeId === change.id)
-        navigate('/change', { state: { change, title, draftId, version } });
+        navigate('/change', { state: { change, title, draftId } });
     };
 
 

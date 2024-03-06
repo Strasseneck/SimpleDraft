@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getDraft } from '../apiService/DraftApi';
 import { getChange } from '../apiService/ChangeApi'
 // types
-import { ChangeResponse } from '../apiService/responseTypes';
+import { ChangeResponse, VersionResponse } from '../apiService/responseTypes';
 // utils
 import { createDraft, revertDraft } from '../utils/DiffMatchPatchUtils';
 import { saveChange } from '../utils/SaveChangeUtil';
@@ -41,7 +41,8 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
     const draft = await getDraft(draftId);
     const original = draft.content;
     // revert the content
-    const reverted = await getVersion(draftId, changeId);
+    const previousVersion: VersionResponse[] = draft.Versions.filter((version) => version.ChangeId === (changeId +1));
+    const reverted = previousVersion[0].content;
     const formattedCreatedAt = moment(change.createdAt).format('MMMM Do YYYY, h:mm a');
     const description = `Reverted to state of script from ${formattedCreatedAt}`;
     const save = await saveChange(description, original, reverted, draftId )

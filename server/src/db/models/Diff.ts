@@ -8,7 +8,6 @@ import { DiffOperation } from "diff-match-patch-typescript";
     text: string;
     createdAt?: Date;
     updatedAt?: Date;
-    PatchId: number;
     ChangeId: number;
   }
 
@@ -18,7 +17,6 @@ import { DiffOperation } from "diff-match-patch-typescript";
     public text!: string;
     public createdAt!: Date; // Sequelize automatically adds it
     public updatedAt!: Date; // Sequelize automatically adds it
-    public PatchId!: number;
     public ChangeId!: number;
   }
 
@@ -45,10 +43,6 @@ Diff.init(
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false
-    },
-    PatchId: {
-      type: DataTypes.INTEGER,
       allowNull: false
     },
     ChangeId: {

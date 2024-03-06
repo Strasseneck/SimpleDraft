@@ -17,37 +17,13 @@ interface LocationState {
     change: ChangeResponse,
     draftTitle: string;
     draftId: number;
-    version: VersionResponse;
 }
 
 const SingleChangeView: React.FC = () => {
-    // const [change, setChange] = useState<ChangeResponse>()
-    // const [diffs, setDiffs] = useState<Diff[]>([]);
-    // const [isReady, setIsReady] = useState<boolean>(false);
+ 
     const location = useLocation();
     const { change, draftTitle, draftId } = location.state as LocationState;
-
-    // useEffect(() => {
-    //     if (id !== undefined && id !== null) {
-    //         async function retrieveChange() {
-    //             try {
-    //                  // get change from api
-    //                  const currentChange = await getChange(id);
-    //                  const currentDiffs = currentChange.Diffs;
-    //                  console.log(currentDiffs.length)
-    //                  setDiffs(currentDiffs);
-    //                  setChange(currentChange);
-    //                  setIsReady(true);
-    //             } catch (error) {
-    //                 console.error(`Error retrieving change with id ${id}`)
-    //             }
-    //         }
-    //         retrieveChange()
-    //     }
-    // }, [id]);
-
     const currentDiffs = change.Diffs;
-    
     const diffsDisplay = createDiffsHTML(currentDiffs);
 
     return (
