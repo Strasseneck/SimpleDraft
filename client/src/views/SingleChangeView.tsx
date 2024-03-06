@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-// services 
-import { getChange } from '../apiService/ChangeApi';
+
 // types
-import { Diff } from 'diff-match-patch-typescript';
-import { ChangeResponse, VersionResponse } from '../apiService/responseTypes';
+import { ChangeResponse } from '../apiService/responseTypes';
 // utils
 import { createDiffsHTML } from '../utils/DiffMatchPatchUtils';
 // components
