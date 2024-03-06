@@ -5,3 +5,13 @@
     border-radius: 5px;
     padding: 20px;
 }
+
+.heading {
+    text-decoration: underline;
+    margin-bottom: 8px;
+}
+
+.heading:hover {
+    color:darkblue;
+}
+

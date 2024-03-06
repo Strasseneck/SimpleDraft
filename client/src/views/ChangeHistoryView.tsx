@@ -17,7 +17,6 @@ interface LocationState {
 
 const ChangeHistoryView: FC = () => {
   const [draft, setDraft] = useState<DraftResponse>({})
-  // const [draftTitle, setDraftTitle] = useState<string>('');
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
   const location = useLocation();
   const { id } = location.state as LocationState;
@@ -29,9 +28,7 @@ const ChangeHistoryView: FC = () => {
           // get draft from api
           const usersDraft = await getDraft(id);
           setDraft(usersDraft);
-          // deconstruct the draft into states
           const { Changes } = usersDraft;
-          // setDraftTitle(title);
           setDraftChanges(Changes);
         } catch (error) {
           console.error(`Error retrieving draft with id: ${id}`, error);

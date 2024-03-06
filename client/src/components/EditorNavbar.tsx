@@ -2,7 +2,6 @@ import { FC } from 'react';
 import DownloadDraftButton from './DownloadDraftButton';
 import './EditorNavbar.css';
 import SaveIcon from '@mui/icons-material/Save';
-import HistoryIcon from '@mui/icons-material/History';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import HomeIcon from '@mui/icons-material/Home';
 
