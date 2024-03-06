@@ -10,7 +10,7 @@ import AllDraftsGrid from '../components/AllDraftsGrid';
 import NewDraftModal from '../components/NewDraftModal';
 // styling
 import './DashboardView.css'
-
+import AddIcon from '@mui/icons-material/Add';
 
 
 const DashboardView: FC = () => {

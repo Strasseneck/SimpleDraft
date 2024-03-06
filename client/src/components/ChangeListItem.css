@@ -11,7 +11,7 @@
     margin-bottom: 8px;
 }
 
-.heading:hover {
+.clickable:hover {
     color:darkblue;
 }
 

@@ -25,7 +25,7 @@ const ChangeListItem: React.FC<ChangeListItemProps> = ({ draft, change }) => {
     return (
         <div className="ChangeItem">
             <a onClick={handleDescriptionClick} style={{ cursor: 'pointer' }}>
-                <p className='heading'>Description:</p>
+                <p className='heading clickable'>Description:</p>
                 <p>{description}</p>
             </a>
             <p className='heading'>Created:</p>

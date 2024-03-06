@@ -1,5 +1,6 @@
 .DashNavbar {
     display: flex;
+    flex-direction: row;
     justify-content: flex-start;
     background-color: var(--dark);
     height: 7vh;
@@ -23,11 +24,15 @@
 }
 .Logo {
     display: flex;
-    align-self: flex-end;
+    justify-self: flex-end;
     font-family: Garamond;
     font-size: large;
-    margin-left: 1100px;
     margin-bottom: 10px;
     color: var(--paper-color);
     letter-spacing: 5px;
+}
+
+#NewDraftBtn {
+    display: flex;
+    flex-direction: column;
 }
