@@ -1,4 +1,5 @@
 .EditorNavbar {
+    position: fixed;
     display: flex;
     justify-content: flex-start;
     background-color: var(--dark);

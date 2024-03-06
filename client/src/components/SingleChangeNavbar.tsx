@@ -39,13 +39,12 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
 
   const onRevertClick = async () => {
     const draft = await getDraft(draftId);
-    const endChange = await getChange(changeId)
-    const originalDraft = createDraft(draft);
+    const original = draft.content;
     // revert the content
-    const revertedDraft = await revertDraft(draft, endChange, draftId);
+    const reverted = await getVersion(draftId, changeId);
     const formattedCreatedAt = moment(change.createdAt).format('MMMM Do YYYY, h:mm a');
     const description = `Reverted to state of script from ${formattedCreatedAt}`;
-    const save = await saveChange(description, originalDraft, revertedDraft, draftId )
+    const save = await saveChange(description, original, reverted, draftId )
     if (save) {
       onEditorClick();
     }

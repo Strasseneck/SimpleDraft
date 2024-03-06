@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { getChange } from '../apiService/ChangeApi';
 // types
 import { Diff } from 'diff-match-patch-typescript';
-import { ChangeResponse } from '../apiService/responseTypes';
+import { ChangeResponse, VersionResponse } from '../apiService/responseTypes';
 // utils
 import { createDiffsHTML } from '../utils/DiffMatchPatchUtils';
 // components
@@ -14,42 +14,45 @@ import SingleChangePage from '../components/SingleChangePage';
 import './SingleChangeView.css'
 
 interface LocationState {
-    id: number,
+    change: ChangeResponse,
     draftTitle: string;
     draftId: number;
+    version: VersionResponse;
 }
 
 const SingleChangeView: React.FC = () => {
-    const [change, setChange] = useState<ChangeResponse>()
-    const [diffs, setDiffs] = useState<Diff[]>([]);
-    const [isReady, setIsReady] = useState<boolean>(false);
+    // const [change, setChange] = useState<ChangeResponse>()
+    // const [diffs, setDiffs] = useState<Diff[]>([]);
+    // const [isReady, setIsReady] = useState<boolean>(false);
     const location = useLocation();
-    const { id, draftTitle, draftId } = location.state as LocationState;
+    const { change, draftTitle, draftId } = location.state as LocationState;
 
-    useEffect(() => {
-        if (id !== undefined && id !== null) {
-            async function retrieveChange() {
-                try {
-                     // get change from api
-                     const currentChange = await getChange(id);
-                     const currentDiffs = currentChange.Diffs;
-                     console.log(currentDiffs.length)
-                     setDiffs(currentDiffs);
-                     setChange(currentChange);
-                     setIsReady(true);
-                } catch (error) {
-                    console.error(`Error retrieving change with id ${id}`)
-                }
-            }
-            retrieveChange()
-        }
-    }, [id]);
+    // useEffect(() => {
+    //     if (id !== undefined && id !== null) {
+    //         async function retrieveChange() {
+    //             try {
+    //                  // get change from api
+    //                  const currentChange = await getChange(id);
+    //                  const currentDiffs = currentChange.Diffs;
+    //                  console.log(currentDiffs.length)
+    //                  setDiffs(currentDiffs);
+    //                  setChange(currentChange);
+    //                  setIsReady(true);
+    //             } catch (error) {
+    //                 console.error(`Error retrieving change with id ${id}`)
+    //             }
+    //         }
+    //         retrieveChange()
+    //     }
+    // }, [id]);
+
+    const currentDiffs = change.Diffs;
     
-    const diffsDisplay = createDiffsHTML(diffs);
+    const diffsDisplay = createDiffsHTML(currentDiffs);
 
     return (
         <div className='MainPageView'>
-            {isReady && change && (
+            {/* {isReady && change && ( */}
                 <div>
                     <SingleChangeNavbar
                         change={change}
@@ -60,7 +63,7 @@ const SingleChangeView: React.FC = () => {
                         < SingleChangePage sanitizedHtmlDiffs={diffsDisplay} />
                     </div>
                 </div>
-            )}
+            {/* )} */}
         </div>
     );
 }

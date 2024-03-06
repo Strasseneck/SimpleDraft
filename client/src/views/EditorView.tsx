@@ -56,6 +56,7 @@ const EditorView: React.FC = () => {
   };
 
   const handleChangeHistoryClick = (id: number) => {
+    console.log(`clicked id: ${id}`)
     navigate('/change-history', { state: { id } });
   }
 

@@ -1,6 +1,7 @@
 import { sequelize } from "../index"
 import { DataTypes, Model } from "sequelize"
 import Change  from "./Change";
+import Version from "./Version";
 
 interface DraftAttributes {
     id: number,
@@ -20,6 +21,8 @@ interface DraftAttributes {
     public UserId!: number;
 
     public readonly changes?: Change[]; // for the associated changes return in getDraft queries
+    public readonly versions?: Version[]; // for the associated versions return in getDraft queries
+
   }
   
   Draft.init({
@@ -56,5 +59,8 @@ interface DraftAttributes {
 
 Draft.hasMany(Change);
 Change.belongsTo(Draft);
+
+Draft.hasMany(Version);
+Version.belongsTo(Draft);
 
 export default Draft

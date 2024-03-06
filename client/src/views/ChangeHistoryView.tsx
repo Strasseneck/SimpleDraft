@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 //services
-import { ChangeResponse } from '../apiService/responseTypes';
+import { ChangeResponse, DraftResponse } from '../apiService/responseTypes';
 import { getDraft } from '../apiService/DraftApi';
 // components
 import ChangeHistoryNavbar from '../components/ChangeHistoryNavbar';
@@ -16,7 +16,8 @@ interface LocationState {
 }
 
 const ChangeHistoryView: FC = () => {
-  const [draftTitle, setDraftTitle] = useState<string>('');
+  const [draft, setDraft] = useState<DraftResponse>({})
+  // const [draftTitle, setDraftTitle] = useState<string>('');
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
   const location = useLocation();
   const { id } = location.state as LocationState;
@@ -27,9 +28,10 @@ const ChangeHistoryView: FC = () => {
         try {
           // get draft from api
           const usersDraft = await getDraft(id);
+          setDraft(usersDraft);
           // deconstruct the draft into states
-          const { title, Changes } = usersDraft;
-          setDraftTitle(title);
+          const { Changes } = usersDraft;
+          // setDraftTitle(title);
           setDraftChanges(Changes);
         } catch (error) {
           console.error(`Error retrieving draft with id: ${id}`, error);
@@ -45,17 +47,17 @@ const ChangeHistoryView: FC = () => {
   return (
     <div className='ChangeHistoryView'>
       <ChangeHistoryNavbar
-        draftTitle={draftTitle}
+        draftTitle={draft.title}
         draftId={id}
       />
       <div className='MainView'>
         <div className='ChangeList'>
-        <h1 className='HistoryHeader'>{draftTitle}</h1>
+        <h1 className='HistoryHeader'>{draft.title}</h1>
           {Object.entries(groupedChanges).map(([date, changesForDay]) => (
             <div className='SingleDay' key={date}>
               <h2 className='DateHeader'>{date}</h2>
               {changesForDay.map((change, index) => (
-                <ChangeListItem key={index} change={change} draftTitle={draftTitle} draftId={id} />
+                <ChangeListItem key={index} change={change} draft={draft} />
               ))}
             </div>
           ))}

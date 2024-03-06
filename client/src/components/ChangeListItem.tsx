@@ -1,23 +1,27 @@
 import React from 'react';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { ChangeResponse } from '../apiService/responseTypes';
+import { ChangeResponse, DraftResponse } from '../apiService/responseTypes';
 import './ChangeListItem.css';
 
 interface ChangeListItemProps {
+    draft: DraftResponse;
     change: ChangeResponse;
-    draftTitle: string;
-    draftId: number;
 }
 
-const ChangeListItem: React.FC<ChangeListItemProps> = ({ change, draftTitle, draftId }) => {
-    const { description, createdAt, id } = change;
+const ChangeListItem: React.FC<ChangeListItemProps> = ({ draft, change }) => {
+    const { description, createdAt } = change;
     const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm a');
     const navigate = useNavigate();
 
     const handleDescriptionClick = () => {
-        navigate('/change', { state: { id, draftTitle, draftId } });
+        const title = draft.title;
+        const draftId = draft.id;
+        const version = draft.Versions.filter((version) => version.ChangeId === change.id)
+        navigate('/change', { state: { change, title, draftId, version } });
     };
+
+
 
     return (
         <div className="ChangeItem">
