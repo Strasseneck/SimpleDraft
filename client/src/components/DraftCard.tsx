@@ -7,6 +7,8 @@ import { deleteDraft } from '../apiService/DraftApi';
 import { DraftResponse } from '../apiService/responseTypes';
 // styling
 import './DraftCard.css'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface Props {
   draft: DraftResponse;
@@ -45,9 +47,9 @@ const DraftCard: FC<Props> = ({ draft, onDelete }) => {
   return (
     <div className='DraftCard'>
         {!showDelete && (
-            <div className='HoverCard'>
-                <button onClick={handleTitleClick}>Edit</button>
-                <button onClick={handleCloseClick}>Delete</button>
+            <div className='HoverCard'> 
+                <button onClick={handleTitleClick}><EditIcon style={{color: 'var(--paper-color)'}} /></button>
+                <button onClick={handleCloseClick}><DeleteIcon style={{color: 'var(--paper-color)'}} /></button>
             </div>
         )}
         {showDelete ? (

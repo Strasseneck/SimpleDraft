@@ -12,6 +12,7 @@ import NewDraftModal from '../components/NewDraftModal';
 import './DashboardView.css'
 
 
+
 const DashboardView: FC = () => {
   const [allDrafts, setAllDrafts] = useState<DraftResponse[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -59,7 +60,7 @@ const DashboardView: FC = () => {
 
   return (
     <div className='DashboardView'>
-      < DashNavbar onShowModal={showNew} />
+      <DashNavbar onShowModal={showNew} />
       {isReady && <AllDraftsGrid drafts={allDrafts} handleDeleteDraft={handleDeleteDraft} />
       }
       <NewDraftModal visible={newVisible} onClose={hideNew} handleNewDraftClick={handleNewDraftClick} />

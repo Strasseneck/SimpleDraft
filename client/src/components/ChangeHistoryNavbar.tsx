@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ChangeHistoryNavbar.css';
+import HomeIcon from '@mui/icons-material/Home';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 interface Props {
   draftId: number;
@@ -23,8 +26,8 @@ const ChangeHistoryNavbar: FC<Props> = ({ draftId }) => {
 
   return (
     <div className='ChangeHistoryNavbar'>
-      <button onClick={onDashboardClick}>Dashboard</button>
-      <button onClick={onEditorClick}>Editor</button>
+      <button onClick={onDashboardClick}><HomeIcon style={{ color: 'white' }} /></button>
+      <button onClick={onEditorClick}><EditIcon style={{ color: 'white' }} /></button>
     </div>
   );
 };

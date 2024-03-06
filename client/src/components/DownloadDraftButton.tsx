@@ -1,3 +1,4 @@
+import DownloadIcon from '@mui/icons-material/Download';
 interface DownloadDraftProps {
     draft: string;
     title: string;
@@ -16,7 +17,7 @@ const DownloadDraftButton: React.FC<DownloadDraftProps> = ({ draft, title }) => 
 
   return (
     <button onClick={handleDownload} >
-      Download
+     <DownloadIcon style={{ color: 'white' }} />
     </button>
   );
 };

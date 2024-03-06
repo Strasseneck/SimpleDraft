@@ -3,14 +3,16 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 // services
 import { getDraft } from '../apiService/DraftApi';
-import { getChange } from '../apiService/ChangeApi'
 // types
 import { ChangeResponse, VersionResponse } from '../apiService/responseTypes';
 // utils
-import { createDraft, revertDraft } from '../utils/DiffMatchPatchUtils';
 import { saveChange } from '../utils/SaveChangeUtil';
 //  styling
 import './EditorNavbar.css';
+import HistoryIcon from '@mui/icons-material/History';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import HomeIcon from '@mui/icons-material/Home';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 interface Props {
@@ -54,10 +56,10 @@ const SingleChangeNavbar: FC<Props> = ({ change, draftId }) => {
 
   return (
     <div className='EditorNavbar'>
-      <button onClick={onDashboardClick}>Dashboard</button>
-      <button onClick={onEditorClick}>Editor</button>
-      <button onClick={onDraftHistoryClick}>Draft History</button>
-      <button onClick={onRevertClick}>Revert</button>
+       <button onClick={onDashboardClick}><HomeIcon style={{ color: 'white' }} /></button>
+       <button onClick={onEditorClick}><EditIcon style={{ color: 'white' }} /></button>
+       <button onClick={onDraftHistoryClick}><HistoryEduIcon style={{ color: 'white' }} /></button>
+      <button onClick={onRevertClick}><HistoryIcon style={{ color: 'white' }} /></button>
     </div>
   );
 };
