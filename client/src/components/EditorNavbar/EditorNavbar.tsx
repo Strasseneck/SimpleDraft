@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import DownloadDraftButton from './DownloadDraftButton';
+import DownloadDraftButton from '../DownloadDraftButton/DownloadDraftButton';
 import './EditorNavbar.css';
 import SaveIcon from '@mui/icons-material/Save';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';

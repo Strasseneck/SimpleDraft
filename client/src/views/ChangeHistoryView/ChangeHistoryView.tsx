@@ -1,13 +1,13 @@
 import { FC, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 //services
-import { ChangeResponse, DraftResponse } from '../apiService/responseTypes';
-import { getDraft } from '../apiService/DraftApi';
+import { ChangeResponse, DraftResponse } from '../../apiService/responseTypes';
+import { getDraft } from '../../apiService/DraftApi';
 // components
-import ChangeHistoryNavbar from '../components/ChangeHistoryNavbar';
-import ChangeListItem from '../components/ChangeListItem';
+import ChangeHistoryNavbar from '../../components/ChangeHistoryNavbar/ChangeHistoryNavbar';
+import ChangeListItem from '../../components/ChangeListItem/ChangeListItem';
 // utils
-import { sortGroupChanges } from '../utils/SortChangesUtil';
+import { sortGroupChanges } from '../../utils/SortChangesUtil';
 // styling
 import './ChangeHistoryView.css';
 
@@ -16,7 +16,7 @@ interface LocationState {
 }
 
 const ChangeHistoryView: FC = () => {
-  const [draft, setDraft] = useState<DraftResponse | null>(null)
+  const [draft, setDraft] = useState<DraftResponse>({})
   const [draftChanges, setDraftChanges] = useState<ChangeResponse[]>([]);
   const location = useLocation();
   const { id } = location.state as LocationState;

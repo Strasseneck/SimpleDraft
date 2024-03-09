@@ -2,9 +2,9 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 // services 
-import { deleteDraft } from '../apiService/DraftApi';
+import { deleteDraft } from '../../apiService/DraftApi';
 // types
-import { DraftResponse } from '../apiService/responseTypes';
+import { DraftResponse } from '../../apiService/responseTypes';
 // styling
 import './DraftCard.css'
 import DeleteIcon from '@mui/icons-material/Delete';

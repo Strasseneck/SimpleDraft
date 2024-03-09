@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DashboardView from './views/DashboardView';
-import ChangeHistoryView from './views/ChangeHistoryView';
-import EditorView from './views/EditorView';
-import SingleChangeView from './views/SingleChangeView';
+import DashboardView from './views/DashboardView/DashboardView';
+import ChangeHistoryView from './views/ChangeHistoryView/ChangeHistoryView';
+import EditorView from './views/EditorView/EditorView';
+import SingleChangeView from './views/SingleChangeView/SingleChangeView';
 
 function App() {
   return (

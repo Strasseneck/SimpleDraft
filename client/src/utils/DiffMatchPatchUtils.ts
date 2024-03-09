@@ -9,7 +9,7 @@ const dmp = new DiffMatchPatch;
 // function to create diffs from two texts
 export const createDiffs = (oldDraft: string, newDraft: string) => {
     const diffs = dmp.diff_main(oldDraft, newDraft);
-    dmp.diff_cleanupSemantic(diffs)
+    dmp.diff_cleanupEfficiency(diffs)
     return diffs;
 };
 

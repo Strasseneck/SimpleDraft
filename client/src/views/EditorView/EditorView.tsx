@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 // utils
-import { saveChange } from '../utils/SaveChangeUtil';
+import { saveChange } from '../../utils/SaveChangeUtil';
 // components
-import Editor from '../components/Editor';
-import EditorNavbar from '../components/EditorNavbar';
-import SaveModal from '../components/SaveModal';
+import Editor from '../../components/Editor/Editor';
+import EditorNavbar from '../../components/EditorNavbar/EditorNavbar';
+import SaveModal from '../../components/Modals/SaveModal';
 // services
-import { getDraft } from '../apiService/DraftApi';
+import { getDraft } from '../../apiService/DraftApi';
 // styling
 import './Editorview.css';
 

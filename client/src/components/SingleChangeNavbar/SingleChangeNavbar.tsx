@@ -2,11 +2,11 @@ import { FC } from 'react';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 // services
-import { getDraft } from '../apiService/DraftApi';
+import { getDraft } from '../../apiService/DraftApi';
 // types
-import { ChangeResponse, VersionResponse } from '../apiService/responseTypes';
+import { ChangeResponse, VersionResponse } from '../../apiService/responseTypes';
 // utils
-import { saveChange } from '../utils/SaveChangeUtil';
+import { saveChange } from '../../utils/SaveChangeUtil';
 //  styling
 import './EditorNavbar.css';
 import HistoryIcon from '@mui/icons-material/History';
