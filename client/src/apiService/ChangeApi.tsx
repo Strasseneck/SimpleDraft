@@ -1,5 +1,5 @@
 import { apiClient } from './ApiClient';
-import { ChangeResponse } from './responseTypes';
+import { ChangeResponse } from '../types/responseTypes';
 import ChangeType from '../types/ChangeType';
 
 export const getChange = async (id: number) => {

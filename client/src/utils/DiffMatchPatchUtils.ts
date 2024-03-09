@@ -1,6 +1,6 @@
 import { DiffMatchPatch, DiffOperation, Diff, PatchObject } from "diff-match-patch-typescript";
 import DOMPurify from "dompurify";
-import { DraftResponse } from "../apiService/responseTypes";
+import { DraftResponse } from "../types/responseTypes";
 
 
 // initialize DiffMatchPatch 

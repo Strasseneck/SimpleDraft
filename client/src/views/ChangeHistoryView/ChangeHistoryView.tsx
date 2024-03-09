@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 //services
-import { ChangeResponse, DraftResponse } from '../../apiService/responseTypes';
+import { ChangeResponse, DraftResponse } from '../../types/responseTypes';
 import { getDraft } from '../../apiService/DraftApi';
 // components
 import ChangeHistoryNavbar from '../../components/ChangeHistoryNavbar/ChangeHistoryNavbar';

@@ -4,7 +4,7 @@ import moment from 'moment';
 // services 
 import { deleteDraft } from '../../apiService/DraftApi';
 // types
-import { DraftResponse } from '../../apiService/responseTypes';
+import { DraftResponse } from '../../types/responseTypes';
 // styling
 import './DraftCard.css'
 import DeleteIcon from '@mui/icons-material/Delete';

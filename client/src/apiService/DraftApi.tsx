@@ -1,6 +1,6 @@
 import template from '../assets/template';
 import { apiClient } from './ApiClient';
-import { DraftResponse } from './responseTypes';
+import { DraftResponse } from '../types/responseTypes';
 
 export const getAllDrafts = async () => {
   return await apiClient<DraftResponse[]>(`draft/all`);

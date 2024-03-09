@@ -1,6 +1,6 @@
 import { FC} from 'react';
 // types
-import { DraftResponse } from '../../apiService/responseTypes';
+import { DraftResponse } from '../../types/responseTypes';
 // components
 import DraftCard from '../DraftCard/DraftCard';
 // styling

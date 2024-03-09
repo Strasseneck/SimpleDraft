@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { ChangeResponse, DraftResponse } from '../../apiService/responseTypes';
+import { ChangeResponse, DraftResponse } from '../../types/responseTypes';
 import './ChangeListItem.css';
 
 interface ChangeListItemProps {

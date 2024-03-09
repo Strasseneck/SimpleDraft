@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // services
 import { getDraft } from '../../apiService/DraftApi';
 // types
-import { ChangeResponse, VersionResponse } from '../../apiService/responseTypes';
+import { ChangeResponse, VersionResponse } from '../../types/responseTypes';
 // utils
 import { saveChange } from '../../utils/SaveChangeUtil';
 //  styling

@@ -1,4 +1,4 @@
- import { ChangeResponse } from "../apiService/responseTypes";
+ import { ChangeResponse } from "../types/responseTypes";
 
 
  export const sortGroupChanges = (draftChanges: ChangeResponse[]) => {

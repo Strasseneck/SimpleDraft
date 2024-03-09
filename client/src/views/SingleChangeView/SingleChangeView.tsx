@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 // types
-import { ChangeResponse } from '../../apiService/responseTypes';
+import { ChangeResponse } from '../../types/responseTypes';
 // utils
 import { createDiffsHTML } from '../../utils/DiffMatchPatchUtils';
 // components
