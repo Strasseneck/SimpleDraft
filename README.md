@@ -1,11 +1,15 @@
 # SimpleDraft
 
-A simple browser based screenwriting app that utilizes the Fountain syntax. No frills plain text editing but with a lightweight, intuitative and user friendly version tracking system. Never forget which draft is The Draft ever again!
+A simple brower based screenwriting app. Write Screenplays utlizing the Fountain syntax and keep tracking of drafts with SimpleDraft's lightweight version tracking system. 
 
 # How To Run
 
-Clone the repo.  From inside the server directory run 'npm install' and then 'npm start', from inside the client directory run 'npm install' and then'npm run dev'. To get the db working you'll need to create a new  postgres db and connect it inside the index.ts file inside server/db. 
+* Clone the repo.
+* From inside the server directory run 'npm install' and then 'npm start'. This will install the required dependencies and run the server.
+* From inside the client directory run 'npm install' and then'npm run dev'. This will install the required dependencies and launch the client in your browser.
+* To get the db working you'll need to create a new PostgreSQL DB instance and then a .env file that looks like this "PASSWORD = 'yoursecretpassword', DB = 'yourdatabasename' USER = 'yourusername'"
+* After that you should be all good to go, have fun writing with SimpleDraft!
 
 # Diff Match Patch
 
-For understanding check out - https://github.com/google/diff-match-patch and the typescript port - https://github.com/nonoroazoro/diff-match-patch-typescript
+If you're interesting in learning more about Diff/Match/Patch check out check out - https://github.com/google/diff-match-patch and the typescript port - https://github.com/nonoroazoro/diff-match-patch-typescript
