@@ -1,6 +1,6 @@
 # SimpleDraft
 
-A simple brower based screenwriting app. Write Screenplays utlizing the Fountain syntax and keep tracking of drafts with SimpleDraft's lightweight version tracking system. 
+A simple brower based screenwriting app. Write Screenplays utlizing the Fountain syntax and keep track of drafts with SimpleDraft's lightweight version tracking system. 
 
 # How To Run
 
