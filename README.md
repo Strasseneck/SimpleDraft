@@ -5,9 +5,9 @@ A simple brower based screenwriting app. Write Screenplays utlizing the Fountain
 # How To Run
 
 * Clone the repo.
-* From inside the server directory run 'npm install' and then 'npm start'. This will install the required dependencies and run the server.
-* From inside the client directory run 'npm install' and then 'npm run dev'. This will install the required dependencies and launch the client in your browser.
-* To get the db working you'll need to create a new PostgreSQL DB instance and then a .env file that looks like this -
+* From inside the server directory run ```'npm install'``` and then ```'npm start'```. This will install the required dependencies and run the server.
+* From inside the client directory run ```'npm install'``` and then ```'npm run dev'```. This will install the required dependencies and launch the client in your browser.
+* To get the db working you'll need to create a new PostgreSQL DB instance and then a ```.env file``` that looks like this -
 
 ```plaintext
 {
