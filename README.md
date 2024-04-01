@@ -19,6 +19,11 @@ A simple brower based screenwriting app. Write Screenplays utlizing the Fountain
 
 * After that you should be all good to go, have fun writing with SimpleDraft!
 
+# Fountain Syntax
+
+To learn more about the Fountain Syntax and why it's a great way to write Screenplays check out - [Fountain](https://fountain.io/)
+
 # Diff Match Patch
 
-If you're interesting in learning more about Diff/Match/Patch check out check out - https://github.com/google/diff-match-patch and the typescript port - https://github.com/nonoroazoro/diff-match-patch-typescript
+If you're interested in learning more about Diff/Match/Patch check out - [Google Diff/Match/Patch](https://github.com/google/diff-match-patch) and the typescript port - [TypeScript Diff/Match/Patch](https://github.com/nonoroazoro/diff-match-patch-typescript)
+
