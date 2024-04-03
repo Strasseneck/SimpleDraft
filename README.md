@@ -6,6 +6,10 @@ A simple brower based screenwriting app. Write Screenplays utlizing the Fountain
 
 ![Gif demo 2](readmeAssets/simpleDraft2.gif)
 
+# Stack
+
+React / Node / Express / Typescript / PostgreSQL
+
 # How To Run
 
 * Clone the repo.
