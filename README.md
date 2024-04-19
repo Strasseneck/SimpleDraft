@@ -8,12 +8,12 @@ React / Node / Express / Typescript / PostgreSQL
 
 # Features
 
-✅ 🖋️ Write screenplays utlizing the Fountain syntax for speed and simplicity.
-✅ 📌 Manage multiple projects with an intuitive all drafts view.
-✅ 📄 Write your script in a clean distraction free editor
-✅ 📇 Keep track of drafts and changes with SimpleDraft's lightweight version tracking system.
-✅ ⏪ Revert to a previous version at any time!
-✅ 📜 Download draft as .fountain file that can be rendered and formatted by many other apps (FinalDraft, FadeIn, etc)
+- ✅ 🖋️ Write screenplays utilizing the Fountain syntax for speed and simplicity.
+- ✅ 📌 Manage multiple projects with an intuitive all drafts view.
+- ✅ 📄 Write your script in a clean distraction-free editor.
+- ✅ 📇 Keep track of drafts and changes with SimpleDraft's lightweight version tracking system.
+- ✅ ⏪ Revert to a previous version at any time!
+- ✅ 📜 Download draft as a .fountain file that can be rendered and formatted by many other apps (FinalDraft, FadeIn, etc).
 
 ![Gif demo 1](readmeAssets/simpleDraft1.gif)
 
