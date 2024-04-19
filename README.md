@@ -5,6 +5,7 @@
 # Stack
 
 React / Node / Express / Typescript / PostgreSQL
+- [![Made with TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)](https://typescriptlang.org "Go to TypeScript homepage")
 
 # Features
 
