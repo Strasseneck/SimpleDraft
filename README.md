@@ -1,16 +1,25 @@
-# SimpleDraft
+# 🎬 SimpleDraft
 
-A simple brower based screenwriting app. Write Screenplays utlizing the Fountain syntax and keep track of drafts with SimpleDraft's lightweight version tracking system. 
-
-![Gif demo 1](readmeAssets/simpleDraft1.gif)
-
-![Gif demo 2](readmeAssets/simpleDraft2.gif)
+💻 A simple brower based screenwriting app.
 
 # Stack
 
 React / Node / Express / Typescript / PostgreSQL
 
-# How To Run
+# Features
+
+✅ 🖋️ Write screenplays utlizing the Fountain syntax for speed and simplicity.
+✅ 📌 Manage multiple projects with an intuitive all drafts view.
+✅ 📄 Write your script in a clean distraction free editor
+✅ 📇 Keep track of drafts and changes with SimpleDraft's lightweight version tracking system.
+✅ ⏪ Revert to a previous version at any time!
+✅ 📜 Download draft as .fountain file that can be rendered and formatted by many other apps (FinalDraft, FadeIn, etc)
+
+![Gif demo 1](readmeAssets/simpleDraft1.gif)
+
+![Gif demo 2](readmeAssets/simpleDraft2.gif)
+
+# Run
 
 * Clone the repo.
 * From inside the server directory run ```'npm install'``` and then ```'npm start'```. This will install the required dependencies and run the server.
